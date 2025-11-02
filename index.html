@@ -1,840 +1,856 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaderMinecraft.github.io - Best MCPE Shaders</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #f8f4e9; /* Whitened gold background */
-            --card-bg: #ffffff;
-            --text-dark: #333333;
-            --text-medium: #555555;
-            --accent-primary: #c9a96e; /* Rich gold */
-            --accent-secondary: #d4b885; /* Lighter gold */
-            --border-color: #e8e0ce;
-            --shadow: 0 4px 12px rgba(201, 169, 110, 0.2);
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: var(--bg-primary);
-            padding: 1.2rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            letter-spacing: -0.5px;
-        }
-
-        .logo i {
-            margin-right: 10px;
-            font-size: 1.6rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            padding: 0.5rem 0;
-            position: relative;
-            font-size: 1.05rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent-primary);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-dark);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Shader Cards Section */
-        .shader-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            font-weight: 700;
-            color: var(--accent-primary);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background-color: var(--accent-primary);
-        }
-
-        .shader-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .shader-card {
-            background-color: var(--card-bg);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .shader-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.3);
-        }
-
-        .card-header {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-thumbnail {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .shader-card:hover .main-thumbnail {
-            transform: scale(1.03);
-        }
-
-        .shader-name-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .shader-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .version-badge {
-            background: rgba(0, 0, 0, 0.7);
-            color: var(--accent-primary);
-            padding: 0.3rem 0.8rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 1px solid rgba(201, 169, 110, 0.5);
-        }
-
-        .creator-info {
-            display: flex;
-            align-items: center;
-            padding: 1rem 1.2rem 0.5rem;
-        }
-
-        .creator-pfp {
-            width: 36px;
-            height: 36px;
-            object-fit: cover;
-            margin-right: 10px;
-            border: 2px solid var(--accent-primary);
-        }
-
-        .creator-details {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .creator-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--accent-primary);
-        }
-
-        .upload-date {
-            font-size: 0.75rem;
-            opacity: 0.7;
-            color: var(--text-medium);
-        }
-
-        .preview-carousel {
-            padding: 0.5rem 1.2rem 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .carousel-container {
-            display: flex;
-            overflow: hidden;
-            gap: 0.5rem;
-            padding-bottom: 0.5rem;
-            width: 100%;
-            cursor: grab;
-        }
-
-        .carousel-container:active {
-            cursor: grabbing;
-        }
-
-        .carousel-track {
-            display: flex;
-            gap: 0.5rem;
-            transition: transform 0.5s ease;
-            user-select: none;
-        }
-
-        .preview-image {
-            width: 90px;
-            height: 70px;
-            object-fit: cover;
-            flex-shrink: 0;
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .preview-image:hover {
-            border-color: var(--accent-primary);
-            transform: scale(1.05);
-        }
-
-        .preview-image.active {
-            border-color: var(--accent-primary);
-            transform: scale(1.05);
-            box-shadow: 0 0 8px rgba(201, 169, 110, 0.5);
-        }
-
-        .carousel-nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            gap: 8px;
-        }
-
-        .carousel-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--border-color);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .carousel-dot.active {
-            background-color: var(--accent-primary);
-            transform: scale(1.2);
-        }
-
-        .card-content {
-            padding: 0 1.2rem 1.2rem;
-        }
-
-        .shader-description {
-            color: var(--text-medium);
-            margin-bottom: 1.2rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.5;
-            font-size: 0.95rem;
-        }
-
-        .shader-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-
-        .shader-tag {
-            background-color: rgba(201, 169, 110, 0.1);
-            color: var(--accent-primary);
-            padding: 0.4rem 0.9rem;
-            font-size: 0.8rem;
-            border: 1px solid rgba(201, 169, 110, 0.3);
-            font-weight: 500;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.2rem;
-            border-top: 1px solid var(--border-color);
-            background: rgba(248, 244, 233, 0.5);
-        }
-
-        .download-info {
-            display: flex;
-            align-items: center;
-            color: var(--text-medium);
-            font-size: 0.85rem;
-        }
-
-        .download-info i {
-            margin-right: 6px;
-            color: var(--accent-primary);
-        }
-
-        .view-details {
-            color: var(--accent-primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-
-        .view-details i {
-            margin-left: 5px;
-            transition: var(--transition);
-            font-size: 0.8rem;
-        }
-
-        .view-details:hover {
-            color: var(--accent-secondary);
-        }
-
-        .view-details:hover i {
-            transform: translateX(3px);
-        }
-
-        /* Footer */
-        footer {
-            background-color: #f0e9d9;
-            padding: 3rem 2rem 1.5rem;
-            margin-top: 2rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .footer-column h3 {
-            color: var(--accent-primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.9rem;
-        }
-
-        .footer-links a {
-            color: var(--text-medium);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-primary);
-            padding-left: 8px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(201, 169, 110, 0.1);
-            color: var(--accent-primary);
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background-color: var(--accent-primary);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-medium);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .nav-links {
-                margin-top: 1.2rem;
-                flex-direction: column;
-                width: 100%;
-                display: none;
-            }
-
-            .nav-links.show {
-                display: flex;
-            }
-
-            .nav-links li {
-                margin: 0.6rem 0;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-                position: absolute;
-                right: 2rem;
-                top: 1.2rem;
-            }
-
-            .shader-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <a href="#" class="logo">
-                <i class="fas fa-gem"></i>
-                shaderminecraft.github.io
-            </a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class=""></i>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#">Shaders</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </header>
-
-    <!-- Shader Cards Section -->
-    <section class="shader-section">
-        <h2 class="section-title">Featured Shader Packs</h2>
-        <div class="shader-grid">
-            <!-- G-Lime Shader Card -->
-            <div class="shader-card" id="g-lime-shader">
-                <div class="card-header">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" alt="G-Lime Shader Preview" class="main-thumbnail">
-                    <div class="shader-name-container">
-                        <div class="shader-name">G-Lime Shader</div>
-                        <div class="version-badge">v2.0.0</div>
-                    </div>
-                </div>
-                
-                <div class="creator-info">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-dirgaas.webp" alt="Creator" class="creator-pfp">
-                    <div class="creator-details">
-                        <div class="creator-name">DirgaAS</div>
-                        <div class="upload-date">Updated: 2 days ago</div>
-                    </div>
-                </div>
-                
-                <div class="preview-carousel">
-                    <div class="carousel-container" id="carousel1">
-                        <div class="carousel-track">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-1.jpg" alt="Preview 1" class="preview-image active">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-2.jpg" alt="Preview 2" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-3.jpg" alt="Preview 3" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-4.jpg" alt="Preview 4" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-5.jpg" alt="Preview 5" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-6.jpg" alt="Preview 6" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-7.jpg" alt="Preview 7" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-8.jpg" alt="Preview 8" class="preview-image">
-                        </div>
-                    </div>
-                    <div class="carousel-nav" id="nav1">
-                        <div class="carousel-dot active" data-index="0"></div>
-                        <div class="carousel-dot" data-index="1"></div>
-                        <div class="carousel-dot" data-index="2"></div>
-                        <div class="carousel-dot" data-index="3"></div>
-                        <div class="carousel-dot" data-index="4"></div>
-                        <div class="carousel-dot" data-index="5"></div>
-                        <div class="carousel-dot" data-index="6"></div>
-                        <div class="carousel-dot" data-index="7"></div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="shader-description">The definitive, clean version of the G-Lime shader. It gives your world that perfect green-lime glow, making everything feel more vibrant and peaceful all while keeping the simple charm of vanilla Minecraft.</p>
-                    <div class="shader-tags">
-                        <span class="shader-tag">Realistic</span>
-                        <span class="shader-tag">Performance</span>
-                        <span class="shader-tag">Optimized</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="download-info">
-                        <i class="fas fa-download"></i> 12.7K Downloads
-                    </div>
-                    <a href="https://shaderminecraft.github.io/glimeshader" class="view-details">
-                        See More <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- LBT Shader Card -->
-            <div class="shader-card" id="lbt-shader">
-                <div class="card-header">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" alt="LBT Shader Preview" class="main-thumbnail">
-                    <div class="shader-name-container">
-                        <div class="shader-name">LBT Shader</div>
-                        <div class="version-badge">v1.0.8</div>
-                    </div>
-                </div>
-                
-                <div class="creator-info">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-anugrahbodi123.webp" alt="Creator" class="creator-pfp">
-                    <div class="creator-details">
-                        <div class="creator-name">anuGrahbodi123</div>
-                        <div class="upload-date">Updated: 1 week ago</div>
-                    </div>
-                </div>
-                
-                <div class="preview-carousel">
-                    <div class="carousel-container" id="carousel2">
-                        <div class="carousel-track">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-day-1.jpg" alt="Preview 1" class="preview-image active">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-sunset-1.jpg" alt="Preview 2" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-1.jpg" alt="Preview 3" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-rain-1.jpg" alt="Preview 4" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-2.jpg" alt="Preview 5" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-nether-1.jpg" alt="Preview 6" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-end-1.jpg" alt="Preview 7" class="preview-image">
-                        </div>
-                    </div>
-                    <div class="carousel-nav" id="nav2">
-                        <div class="carousel-dot active" data-index="0"></div>
-                        <div class="carousel-dot" data-index="1"></div>
-                        <div class="carousel-dot" data-index="2"></div>
-                        <div class="carousel-dot" data-index="3"></div>
-                        <div class="carousel-dot" data-index="4"></div>
-                        <div class="carousel-dot" data-index="5"></div>
-                        <div class="carousel-dot" data-index="6"></div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="shader-description">LBT Shader. This shader will make your world more beautiful by changing the colors of day, night, rain, torch, and more. This shader will also make fog in your world more beautiful.</p>
-                    <div class="shader-tags">
-                        <span class="shader-tag">Water Effects</span>
-                        <span class="shader-tag">Performance</span>
-                        <span class="shader-tag">Low-End</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="download-info">
-                        <i class="fas fa-download"></i> 140K+ Downloads
-                    </div>
-                    <a href="https://shaderminecraft.github.io/lbtshader" class="view-details">
-                        See More <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>shaderminecraft.github.io</h3>
-                <p>Your ultimate destination for the best Minecraft Pocket Edition shaders. Transform your gameplay with stunning visual enhancements.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-discord"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-reddit"></i></a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">All Shaders</a></li>
-                    <li><a href="#">Categories</a></li>
-                    <li><a href="#">Top Downloads</a></li>
-                    <li><a href="#">Latest Updates</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Support</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Installation Guide</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Troubleshooting</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Submit a Shader</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2025 shaderminecraft.github.io . All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('navLinks').classList.toggle('show');
-        });
-
-        // Initialize carousels with improved functionality
-        function initCarousel(carouselId, navId, shaderLink) {
-            const carousel = document.getElementById(carouselId);
-            const track = carousel.querySelector('.carousel-track');
-            const images = track.querySelectorAll('.preview-image');
-            const nav = document.getElementById(navId);
-            const dots = nav.querySelectorAll('.carousel-dot');
-            const containerWidth = carousel.offsetWidth;
-            const imageWidth = 90; // width of each preview image
-            const gap = 8; // gap between images
-            const visibleCount = Math.floor(containerWidth / (imageWidth + gap));
-            
-            let currentIndex = 0;
-            let isDragging = false;
-            let startPos = 0;
-            let currentTranslate = 0;
-            let prevTranslate = 0;
-            let animationID;
-            
-            // Function to update carousel position
-            function updateCarousel() {
-                const translateX = -currentIndex * (imageWidth + gap);
-                track.style.transform = `translateX(${translateX}px)`;
-                
-                // Update active states
-                images.forEach((img, index) => {
-                    img.classList.toggle('active', index === currentIndex);
-                });
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
-            }
-            
-            // Click on dots to navigate
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentIndex = index;
-                    updateCarousel();
-                });
-            });
-            
-            // Click on images to navigate or open link
-            images.forEach((img, index) => {
-                img.addEventListener('click', (e) => {
-                    // Only navigate if not dragging
-                    if (!isDragging) {
-                        currentIndex = index;
-                        updateCarousel();
-                    }
-                });
-            });
-            
-            // Auto-advance carousel
-            setInterval(() => {
-                if (!isDragging) {
-                    currentIndex = (currentIndex + 1) % images.length;
-                    updateCarousel();
-                }
-            }, 2000);
-            
-            // Drag functionality for carousel
-            function startDrag(e) {
-                isDragging = true;
-                startPos = getPositionX(e);
-                track.style.cursor = 'grabbing';
-                track.style.userSelect = 'none';
-                
-                // Cancel animation frame if any
-                cancelAnimationFrame(animationID);
-            }
-            
-            function drag(e) {
-                if (isDragging) {
-                    const currentPosition = getPositionX(e);
-                    currentTranslate = prevTranslate + currentPosition - startPos;
-                }
-            }
-            
-            function endDrag() {
-                isDragging = false;
-                track.style.cursor = 'grab';
-                
-                const movedBy = currentTranslate - prevTranslate;
-                
-                // If moved enough to change slide
-                if (movedBy < -50 && currentIndex < images.length - 1) {
-                    currentIndex += 1;
-                }
-                
-                if (movedBy > 50 && currentIndex > 0) {
-                    currentIndex -= 1;
-                }
-                
-                updateCarousel();
-                prevTranslate = -currentIndex * (imageWidth + gap);
-            }
-            
-            function getPositionX(e) {
-                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            }
-            
-            // Mouse events
-            carousel.addEventListener('mousedown', startDrag);
-            carousel.addEventListener('mousemove', drag);
-            carousel.addEventListener('mouseup', endDrag);
-            carousel.addEventListener('mouseleave', endDrag);
-            
-            // Touch events
-            carousel.addEventListener('touchstart', startDrag);
-            carousel.addEventListener('touchmove', drag);
-            carousel.addEventListener('touchend', endDrag);
-            
-            // Initialize
-            updateCarousel();
-        }
-        
-        // Initialize both carousels
-        document.addEventListener('DOMContentLoaded', function() {
-            // G-Lime Shader
-            initCarousel('carousel1', 'nav1', 'https://shaderminecraft.github.io/glimeshader');
-            
-            // LBT Shader
-            initCarousel('carousel2', 'nav2', 'https://shaderminecraft.github.io/lbtshader');
-            
-            // Add click events to main thumbnails and preview images
-            const gLimeCard = document.getElementById('g-lime-shader');
-            const lbtCard = document.getElementById('lbt-shader');
-            
-            // G-Lime Shader click events
-            gLimeCard.querySelector('.main-thumbnail').addEventListener('click', function() {
-                window.location.href = 'https://shaderminecraft.github.io/glimeshader';
-            });
-            
-            gLimeCard.querySelectorAll('.preview-image').forEach(img => {
-                img.addEventListener('click', function(e) {
-                    if (!e.target.closest('.carousel-container').isDragging) {
-                        window.location.href = 'https://shaderminecraft.github.io/glimeshader';
-                    }
-                });
-            });
-            
-            // LBT Shader click events
-            lbtCard.querySelector('.main-thumbnail').addEventListener('click', function() {
-                window.location.href = 'https://shaderminecraft.github.io/lbtshader';
-            });
-            
-            lbtCard.querySelectorAll('.preview-image').forEach(img => {
-                img.addEventListener('click', function(e) {
-                    if (!e.target.closest('.carousel-container').isDragging) {
-                        window.location.href = 'https://shaderminecraft.github.io/lbtshader';
-                    }
-                });
-            });
-        });
-    </script>
-</body>
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>ShaderMinecraft.github.io - Best MCPE Shaders</title>  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
+    <style>  
+        :root {  
+            --bg-primary: #f8f4e9; /* Whitened gold background */  
+            --card-bg: #ffffff;  
+            --text-dark: #333333;  
+            --text-medium: #555555;  
+            --accent-primary: #c9a96e; /* Rich gold */  
+            --accent-secondary: #d4b885; /* Lighter gold */  
+            --border-color: #e8e0ce;  
+            --shadow: 0 4px 12px rgba(201, 169, 110, 0.2);  
+            --transition: all 0.3s ease;  
+        }  
+
+        * {  
+            margin: 0;  
+            padding: 0;  
+            box-sizing: border-box;  
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+        }  
+
+        body {  
+            background-color: var(--bg-primary);  
+            color: var(--text-dark);  
+            line-height: 1.6;  
+            overflow-x: hidden;  
+        }  
+
+        /* Header Styles */  
+        header {  
+            background-color: var(--bg-primary);  
+            padding: 1.2rem 2rem;  
+            position: sticky;  
+            top: 0;  
+            z-index: 100;  
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);  
+            border-bottom: 1px solid var(--border-color);  
+        }  
+
+        .header-container {  
+            max-width: 1200px;  
+            margin: 0 auto;  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: center;  
+        }  
+
+        .logo {  
+            font-size: 1.8rem;  
+            font-weight: 800;  
+            color: var(--accent-primary);  
+            text-decoration: none;  
+            display: flex;  
+            align-items: center;  
+            letter-spacing: -0.5px;  
+        }  
+
+        .logo i {  
+            margin-right: 10px;  
+            font-size: 1.6rem;  
+        }  
+
+        .nav-links {  
+            display: flex;  
+            list-style: none;  
+        }  
+
+        .nav-links li {  
+            margin-left: 2rem;  
+        }  
+
+        .nav-links a {  
+            color: var(--text-dark);  
+            text-decoration: none;  
+            font-weight: 500;  
+            transition: var(--transition);  
+            padding: 0.5rem 0;  
+            position: relative;  
+            font-size: 1.05rem;  
+        }  
+
+        .nav-links a:hover {  
+            color: var(--accent-primary);  
+        }  
+
+        .nav-links a::after {  
+            content: '';  
+            position: absolute;  
+            bottom: 0;  
+            left: 0;  
+            width: 0;  
+            height: 2px;  
+            background-color: var(--accent-primary);  
+            transition: var(--transition);  
+        }  
+
+        .nav-links a:hover::after {  
+            width: 100%;  
+        }  
+
+        .mobile-menu-btn {  
+            display: none;  
+            background: none;  
+            border: none;  
+            color: var(--text-dark);  
+            font-size: 1.5rem;  
+            cursor: pointer;  
+        }  
+
+        /* Shader Cards Section */  
+        .shader-section {  
+            max-width: 1200px;  
+            margin: 0 auto;  
+            padding: 3rem 2rem;  
+        }  
+
+        .section-title {  
+            font-size: 2.5rem;  
+            margin-bottom: 3rem;  
+            text-align: center;  
+            position: relative;  
+            font-weight: 700;  
+            color: var(--accent-primary);  
+        }  
+
+        .section-title::after {  
+            content: '';  
+            position: absolute;  
+            bottom: -15px;  
+            left: 50%;  
+            transform: translateX(-50%);  
+            width: 100px;  
+            height: 3px;  
+            background-color: var(--accent-primary);  
+        }  
+
+        .shader-grid {  
+            display: grid;  
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));  
+            gap: 2.5rem;  
+        }  
+
+        .shader-card {  
+            background-color: var(--card-bg);  
+            overflow: hidden;  
+            box-shadow: var(--shadow);  
+            transition: var(--transition);  
+            border: 1px solid var(--border-color);  
+            position: relative;  
+        }  
+
+        .shader-card:hover {  
+            transform: translateY(-5px);  
+            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.3);  
+        }  
+
+        .card-header {  
+            position: relative;  
+            overflow: hidden;  
+        }  
+
+        .main-thumbnail {  
+            width: 100%;  
+            height: 200px;  
+            object-fit: cover;  
+            transition: var(--transition);  
+            cursor: pointer;  
+        }  
+
+        .shader-card:hover .main-thumbnail {  
+            transform: scale(1.03);  
+        }  
+
+        .shader-name-container {  
+            position: absolute;  
+            bottom: 0;  
+            left: 0;  
+            width: 100%;  
+            padding: 1.2rem;  
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: flex-end;  
+        }  
+
+        .shader-name {  
+            font-size: 1.5rem;  
+            font-weight: 700;  
+            color: white;  
+        }  
+
+        .version-badge {  
+            background: rgba(0, 0, 0, 0.7);  
+            color: var(--accent-primary);  
+            padding: 0.3rem 0.8rem;  
+            font-size: 0.8rem;  
+            font-weight: 600;  
+            border: 1px solid rgba(201, 169, 110, 0.5);  
+        }  
+
+        .creator-info {  
+            display: flex;  
+            align-items: center;  
+            padding: 1rem 1.2rem 0.5rem;  
+            cursor: pointer;  
+            outline: none; /* Remove outline */  
+        }  
+
+        .creator-pfp {  
+            width: 36px;  
+            height: 36px;  
+            object-fit: cover;  
+            margin-right: 10px;  
+            border: 2px solid var(--accent-primary);  
+        }  
+
+        .creator-details {  
+            display: flex;  
+            flex-direction: column;  
+        }  
+
+        .creator-name {  
+            font-weight: 600;  
+            font-size: 0.95rem;  
+            color: var(--accent-primary);  
+            transition: var(--transition);  
+            text-decoration: underline; /* Add underline */  
+            text-decoration-color: transparent; /* Make underline transparent by default */  
+            text-underline-offset: 2px; /* Position the underline */  
+        }  
+
+        .creator-info:hover .creator-name {  
+            color: var(--accent-secondary);  
+            text-decoration-color: var(--accent-secondary); /* Show underline on hover */  
+        }  
+
+        .upload-date {  
+            font-size: 0.75rem;  
+            opacity: 0.7;  
+            color: var(--text-medium);  
+        }  
+
+        .preview-carousel {  
+            padding: 0.5rem 1.2rem 1rem;  
+            position: relative;  
+            overflow: hidden;  
+        }  
+
+        .carousel-container {  
+            display: flex;  
+            overflow: hidden;  
+            gap: 0.5rem;  
+            padding-bottom: 0.5rem;  
+            width: 100%;  
+            cursor: grab;  
+        }  
+
+        .carousel-container:active {  
+            cursor: grabbing;  
+        }  
+
+        .carousel-track {  
+            display: flex;  
+            gap: 0.5rem;  
+            transition: transform 0.5s ease;  
+            user-select: none;  
+        }  
+
+        .preview-image {  
+            width: 90px;  
+            height: 70px;  
+            object-fit: cover;  
+            flex-shrink: 0;  
+            border: 1px solid var(--border-color);  
+            transition: var(--transition);  
+            cursor: pointer;  
+        }  
+
+        .preview-image:hover {  
+            border-color: var(--accent-primary);  
+            transform: scale(1.05);  
+        }  
+
+        .preview-image.active {  
+            border-color: var(--accent-primary);  
+            transform: scale(1.05);  
+            box-shadow: 0 0 8px rgba(201, 169, 110, 0.5);  
+        }  
+
+        .carousel-nav {  
+            display: flex;  
+            justify-content: center;  
+            margin-top: 10px;  
+            gap: 8px;  
+        }  
+
+        .carousel-dot {  
+            width: 8px;  
+            height: 8px;  
+            border-radius: 50%;  
+            background-color: var(--border-color);  
+            cursor: pointer;  
+            transition: var(--transition);  
+        }  
+
+        .carousel-dot.active {  
+            background-color: var(--accent-primary);  
+            transform: scale(1.2);  
+        }  
+
+        .card-content {  
+            padding: 0 1.2rem 1.2rem;  
+        }  
+
+        .shader-description {  
+            color: var(--text-medium);  
+            margin-bottom: 1.2rem;  
+            display: -webkit-box;  
+            -webkit-line-clamp: 3;  
+            -webkit-box-orient: vertical;  
+            overflow: hidden;  
+            line-height: 1.5;  
+            font-size: 0.95rem;  
+        }  
+
+        .shader-tags {  
+            display: flex;  
+            flex-wrap: wrap;  
+            gap: 0.6rem;  
+        }  
+
+        .shader-tag {  
+            background-color: rgba(201, 169, 110, 0.1);  
+            color: var(--accent-primary);  
+            padding: 0.4rem 0.9rem;  
+            font-size: 0.8rem;  
+            border: 1px solid rgba(201, 169, 110, 0.3);  
+            font-weight: 500;  
+        }  
+
+        .card-footer {  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: center;  
+            padding: 1rem 1.2rem;  
+            border-top: 1px solid var(--border-color);  
+            background: rgba(248, 244, 233, 0.5);  
+        }  
+
+        .download-info {  
+            display: flex;  
+            align-items: center;  
+            color: var(--text-medium);  
+            font-size: 0.85rem;  
+        }  
+
+        .download-info i {  
+            margin-right: 6px;  
+            color: var(--accent-primary);  
+        }  
+
+        .view-details {  
+            color: var(--accent-primary);  
+            text-decoration: none;  
+            font-weight: 600;  
+            font-size: 0.85rem;  
+            transition: var(--transition);  
+            display: flex;  
+            align-items: center;  
+        }  
+
+        .view-details i {  
+            margin-left: 5px;  
+            transition: var(--transition);  
+            font-size: 0.8rem;  
+        }  
+
+        .view-details:hover {  
+            color: var(--accent-secondary);  
+        }  
+
+        .view-details:hover i {  
+            transform: translateX(3px);  
+        }  
+
+        /* Footer */  
+        footer {  
+            background-color: #f0e9d9;  
+            padding: 3rem 2rem 1.5rem;  
+            margin-top: 2rem;  
+            border-top: 1px solid var(--border-color);  
+        }  
+
+        .footer-content {  
+            max-width: 1200px;  
+            margin: 0 auto;  
+            display: grid;  
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+            gap: 2.5rem;  
+        }  
+
+        .footer-column h3 {  
+            color: var(--accent-primary);  
+            margin-bottom: 1.5rem;  
+            font-size: 1.3rem;  
+        }  
+
+        .footer-links {  
+            list-style: none;  
+        }  
+
+        .footer-links li {  
+            margin-bottom: 0.9rem;  
+        }  
+
+        .footer-links a {  
+            color: var(--text-medium);  
+            text-decoration: none;  
+            transition: var(--transition);  
+        }  
+
+        .footer-links a:hover {  
+            color: var(--accent-primary);  
+            padding-left: 8px;  
+        }  
+
+        .social-links {  
+            display: flex;  
+            gap: 1rem;  
+            margin-top: 1.5rem;  
+        }  
+
+        .social-links a {  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            width: 40px;  
+            height: 40px;  
+            background-color: rgba(201, 169, 110, 0.1);  
+            color: var(--accent-primary);  
+            transition: var(--transition);  
+        }  
+
+        .social-links a:hover {  
+            background-color: var(--accent-primary);  
+            color: white;  
+            transform: translateY(-3px);  
+        }  
+
+        .copyright {  
+            text-align: center;  
+            margin-top: 3rem;  
+            padding-top: 1.5rem;  
+            border-top: 1px solid var(--border-color);  
+            color: var(--text-medium);  
+            font-size: 0.9rem;  
+        }  
+
+        /* Remove blue outline on click for all elements */  
+        *:focus {  
+            outline: none;  
+        }  
+
+        /* Responsive Design */  
+        @media (max-width: 768px) {  
+            .header-container {  
+                flex-direction: column;  
+                align-items: flex-start;  
+            }  
+
+            .nav-links {  
+                margin-top: 1.2rem;  
+                flex-direction: column;  
+                width: 100%;  
+                display: none;  
+            }  
+
+            .nav-links.show {  
+                display: flex;  
+            }  
+
+            .nav-links li {  
+                margin: 0.6rem 0;  
+            }  
+
+            .mobile-menu-btn {  
+                display: block;  
+                position: absolute;  
+                right: 2rem;  
+                top: 1.2rem;  
+            }  
+
+            .shader-grid {  
+                grid-template-columns: 1fr;  
+            }  
+
+            .section-title {  
+                font-size: 2rem;  
+            }  
+        }  
+    </style>  
+</head>  
+<body>  
+    <!-- Header -->  
+    <header>  
+        <div class="header-container">  
+            <a href="#" class="logo">  
+                <i class="fas fa-gem"></i>  
+                shaderminecraft.github.io  
+            </a>  
+            <button class="mobile-menu-btn" id="mobileMenuBtn">  
+                <i class=""></i>  
+            </button>  
+            <ul class="nav-links" id="navLinks">  
+                <li><a href="#" class="active">Home</a></li>  
+                <li><a href="#">Shaders</a></li>  
+                <li><a href="#">Categories</a></li>  
+                <li><a href="#">About</a></li>  
+                <li><a href="#">Contact</a></li>  
+            </ul>  
+        </div>  
+    </header>  
+
+    <!-- Shader Cards Section -->  
+    <section class="shader-section">  
+        <h2 class="section-title">Featured Shader Packs</h2>  
+        <div class="shader-grid">  
+            <!-- G-Lime Shader Card -->  
+            <div class="shader-card" id="g-lime-shader">  
+                <div class="card-header">  
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" alt="G-Lime Shader Preview" class="main-thumbnail">  
+                    <div class="shader-name-container">  
+                        <div class="shader-name">G-Lime Shader</div>  
+                        <div class="version-badge">v2.0.0</div>  
+                    </div>  
+                </div>  
+                  
+                <div class="creator-info" onclick="window.open('https://Instagram.com/dirgaas._', '_blank')">  
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-dirgaas.webp" alt="Creator" class="creator-pfp">  
+                    <div class="creator-details">  
+                        <div class="creator-name">DirgaAS</div>  
+                        <div class="upload-date">Updated: 2 days ago</div>  
+                    </div>  
+                </div>  
+                  
+                <div class="preview-carousel">  
+                    <div class="carousel-container" id="carousel1">  
+                        <div class="carousel-track">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-1.jpg" alt="Preview 1" class="preview-image active">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-2.jpg" alt="Preview 2" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-3.jpg" alt="Preview 3" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-4.jpg" alt="Preview 4" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-5.jpg" alt="Preview 5" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-6.jpg" alt="Preview 6" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-7.jpg" alt="Preview 7" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-8.jpg" alt="Preview 8" class="preview-image">  
+                        </div>  
+                    </div>  
+                    <div class="carousel-nav" id="nav1">  
+                        <div class="carousel-dot active" data-index="0"></div>  
+                        <div class="carousel-dot" data-index="1"></div>  
+                        <div class="carousel-dot" data-index="2"></div>  
+                        <div class="carousel-dot" data-index="3"></div>  
+                        <div class="carousel-dot" data-index="4"></div>  
+                        <div class="carousel-dot" data-index="5"></div>  
+                        <div class="carousel-dot" data-index="6"></div>  
+                        <div class="carousel-dot" data-index="7"></div>  
+                    </div>  
+                </div>  
+                <div class="card-content">  
+                    <p class="shader-description">The definitive, clean version of the G-Lime shader. It gives your world that perfect green-lime glow, making everything feel more vibrant and peaceful all while keeping the simple charm of vanilla Minecraft.</p>  
+                    <div class="shader-tags">  
+                        <span class="shader-tag">Realistic</span>  
+                        <span class="shader-tag">Performance</span>  
+                        <span class="shader-tag">Optimized</span>  
+                    </div>  
+                </div>  
+                <div class="card-footer">  
+                    <div class="download-info">  
+                        <i class="fas fa-download"></i> 12.7K Downloads  
+                    </div>  
+                    <a href="https://shaderminecraft.github.io/glimeshader" class="view-details">  
+                        See More <i class="fas fa-arrow-right"></i>  
+                    </a>  
+                </div>  
+            </div>  
+
+            <!-- LBT Shader Card -->  
+            <div class="shader-card" id="lbt-shader">  
+                <div class="card-header">  
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" alt="LBT Shader Preview" class="main-thumbnail">  
+                    <div class="shader-name-container">  
+                        <div class="shader-name">LBT Shader</div>  
+                        <div class="version-badge">v1.0.8</div>  
+                    </div>  
+                </div>  
+                  
+                <div class="creator-info" onclick="window.open('https://Instagram.com/anugrahbodi123', '_blank')">  
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-anugrahbodi123.webp" alt="Creator" class="creator-pfp">  
+                    <div class="creator-details">  
+                        <div class="creator-name">anuGrahbodi123</div>  
+                        <div class="upload-date">Updated: 1 week ago</div>  
+                    </div>  
+                </div>  
+                  
+                <div class="preview-carousel">  
+                    <div class="carousel-container" id="carousel2">  
+                        <div class="carousel-track">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-day-1.jpg" alt="Preview 1" class="preview-image active">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-sunset-1.jpg" alt="Preview 2" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-1.jpg" alt="Preview 3" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-rain-1.jpg" alt="Preview 4" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-2.jpg" alt="Preview 5" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-nether-1.jpg" alt="Preview 6" class="preview-image">  
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-end-1.jpg" alt="Preview 7" class="preview-image">  
+                        </div>  
+                    </div>  
+                    <div class="carousel-nav" id="nav2">  
+                        <div class="carousel-dot active" data-index="0"></div>  
+                        <div class="carousel-dot" data-index="1"></div>  
+                        <div class="carousel-dot" data-index="2"></div>  
+                        <div class="carousel-dot" data-index="3"></div>  
+                        <div class="carousel-dot" data-index="4"></div>  
+                        <div class="carousel-dot" data-index="5"></div>  
+                        <div class="carousel-dot" data-index="6"></div>  
+                    </div>  
+                </div>  
+                <div class="card-content">  
+                    <p class="shader-description">LBT Shader. This shader will make your world more beautiful by changing the colors of day, night, rain, torch, and more. This shader will also make fog in your world more beautiful.</p>  
+                    <div class="shader-tags">  
+                        <span class="shader-tag">Water Effects</span>  
+                        <span class="shader-tag">Performance</span>  
+                        <span class="shader-tag">Low-End</span>  
+                    </div>  
+                </div>  
+                <div class="card-footer">  
+                    <div class="download-info">  
+                        <i class="fas fa-download"></i> 140K+ Downloads  
+                    </div>  
+                    <a href="https://shaderminecraft.github.io/lbtshader" class="view-details">  
+                        See More <i class="fas fa-arrow-right"></i>  
+                    </a>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+
+    <!-- Footer -->  
+    <footer>  
+        <div class="footer-content">  
+            <div class="footer-column">  
+                <h3>shaderminecraft.github.io</h3>  
+                <p>Your ultimate destination for the best Minecraft Pocket Edition shaders. Transform your gameplay with stunning visual enhancements.</p>  
+                <div class="social-links">  
+                    <a href="#"><i class="fab fa-discord"></i></a>  
+                    <a href="#"><i class="fab fa-youtube"></i></a>  
+                    <a href="#"><i class="fab fa-twitter"></i></a>  
+                    <a href="#"><i class="fab fa-reddit"></i></a>  
+                </div>  
+            </div>  
+            <div class="footer-column">  
+                <h3>Quick Links</h3>  
+                <ul class="footer-links">  
+                    <li><a href="#">Home</a></li>  
+                    <li><a href="#">All Shaders</a></li>  
+                    <li><a href="#">Categories</a></li>  
+                    <li><a href="#">Top Downloads</a></li>  
+                    <li><a href="#">Latest Updates</a></li>  
+                </ul>  
+            </div>  
+            <div class="footer-column">  
+                <h3>Support</h3>  
+                <ul class="footer-links">  
+                    <li><a href="#">Installation Guide</a></li>  
+                    <li><a href="#">FAQ</a></li>  
+                    <li><a href="#">Troubleshooting</a></li>  
+                    <li><a href="#">Contact Us</a></li>  
+                    <li><a href="#">Submit a Shader</a></li>  
+                </ul>  
+            </div>  
+        </div>  
+        <div class="copyright">  
+            <p>&copy; 2025 shaderminecraft.github.io . All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>  
+        </div>  
+    </footer>  
+
+    <script>  
+        // Mobile menu toggle  
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {  
+            document.getElementById('navLinks').classList.toggle('show');  
+        });  
+
+        // Initialize carousels with improved functionality  
+        function initCarousel(carouselId, navId, shaderLink) {  
+            const carousel = document.getElementById(carouselId);  
+            const track = carousel.querySelector('.carousel-track');  
+            const images = track.querySelectorAll('.preview-image');  
+            const nav = document.getElementById(navId);  
+            const dots = nav.querySelectorAll('.carousel-dot');  
+            const containerWidth = carousel.offsetWidth;  
+            const imageWidth = 90; // width of each preview image  
+            const gap = 8; // gap between images  
+            const visibleCount = Math.floor(containerWidth / (imageWidth + gap));  
+              
+            let currentIndex = 0;  
+            let isDragging = false;  
+            let startPos = 0;  
+            let currentTranslate = 0;  
+            let prevTranslate = 0;  
+            let animationID;  
+              
+            // Function to update carousel position  
+            function updateCarousel() {  
+                const translateX = -currentIndex * (imageWidth + gap);  
+                track.style.transform = `translateX(${translateX}px)`;  
+                  
+                // Update active states  
+                images.forEach((img, index) => {  
+                    img.classList.toggle('active', index === currentIndex);  
+                });  
+                  
+                dots.forEach((dot, index) => {  
+                    dot.classList.toggle('active', index === currentIndex);  
+                });  
+            }  
+              
+            // Click on dots to navigate  
+            dots.forEach((dot, index) => {  
+                dot.addEventListener('click', () => {  
+                    currentIndex = index;  
+                    updateCarousel();  
+                });  
+            });  
+              
+            // Click on images to navigate or open link  
+            images.forEach((img, index) => {  
+                img.addEventListener('click', (e) => {  
+                    // Only navigate if not dragging  
+                    if (!isDragging) {  
+                        currentIndex = index;  
+                        updateCarousel();  
+                    }  
+                });  
+            });  
+              
+            // Auto-advance carousel  
+            setInterval(() => {  
+                if (!isDragging) {  
+                    currentIndex = (currentIndex + 1) % images.length;  
+                    updateCarousel();  
+                }  
+            }, 2000);  
+              
+            // Drag functionality for carousel  
+            function startDrag(e) {  
+                isDragging = true;  
+                startPos = getPositionX(e);  
+                track.style.cursor = 'grabbing';  
+                track.style.userSelect = 'none';  
+                  
+                // Cancel animation frame if any  
+                cancelAnimationFrame(animationID);  
+            }  
+              
+            function drag(e) {  
+                if (isDragging) {  
+                    const currentPosition = getPositionX(e);  
+                    currentTranslate = prevTranslate + currentPosition - startPos;  
+                }  
+            }  
+              
+            function endDrag() {  
+                isDragging = false;  
+                track.style.cursor = 'grab';  
+                  
+                const movedBy = currentTranslate - prevTranslate;  
+                  
+                // If moved enough to change slide  
+                if (movedBy < -50 && currentIndex < images.length - 1) {  
+                    currentIndex += 1;  
+                }  
+                  
+                if (movedBy > 50 && currentIndex > 0) {  
+                    currentIndex -= 1;  
+                }  
+                  
+                updateCarousel();  
+                prevTranslate = -currentIndex * (imageWidth + gap);  
+            }  
+              
+            function getPositionX(e) {  
+                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;  
+            }  
+              
+            // Mouse events  
+            carousel.addEventListener('mousedown', startDrag);  
+            carousel.addEventListener('mousemove', drag);  
+            carousel.addEventListener('mouseup', endDrag);  
+            carousel.addEventListener('mouseleave', endDrag);  
+              
+            // Touch events  
+            carousel.addEventListener('touchstart', startDrag);  
+            carousel.addEventListener('touchmove', drag);  
+            carousel.addEventListener('touchend', endDrag);  
+              
+            // Initialize  
+            updateCarousel();  
+        }  
+          
+        // Initialize both carousels  
+        document.addEventListener('DOMContentLoaded', function() {  
+            // G-Lime Shader  
+            initCarousel('carousel1', 'nav1', 'https://shaderminecraft.github.io/glimeshader');  
+              
+            // LBT Shader  
+            initCarousel('carousel2', 'nav2', 'https://shaderminecraft.github.io/lbtshader');  
+              
+            // Add click events to main thumbnails and preview images  
+            const gLimeCard = document.getElementById('g-lime-shader');  
+            const lbtCard = document.getElementById('lbt-shader');  
+              
+            // G-Lime Shader click events  
+            gLimeCard.querySelector('.main-thumbnail').addEventListener('click', function() {  
+                window.location.href = 'https://shaderminecraft.github.io/glimeshader';  
+            });  
+              
+            gLimeCard.querySelectorAll('.preview-image').forEach(img => {  
+                img.addEventListener('click', function(e) {  
+                    if (!e.target.closest('.carousel-container').isDragging) {  
+                        window.location.href = 'https://shaderminecraft.github.io/glimeshader';  
+                    }  
+                });  
+            });  
+              
+            // LBT Shader click events  
+            lbtCard.querySelector('.main-thumbnail').addEventListener('click', function() {  
+                window.location.href = 'https://shaderminecraft.github.io/lbtshader';  
+            });  
+              
+            lbtCard.querySelectorAll('.preview-image').forEach(img => {  
+                img.addEventListener('click', function(e) {  
+                    if (!e.target.closest('.carousel-container').isDragging) {  
+                        window.location.href = 'https://shaderminecraft.github.io/lbtshader';  
+                    }  
+                });  
+            });  
+        });  
+    </script>  
+</body>  
 </html>
