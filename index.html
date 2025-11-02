@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -570,7 +569,7 @@
                     <div class="download-info">
                         <i class="fas fa-download"></i> 12.7K Downloads
                     </div>
-                    <a href="https://shaderminecraft.github.io/shaderminecraft/shaderminecraft-web/glimeshader" class="view-details">
+                    <a href="https://shaderminecraft.github.io/glimeshader" class="view-details">
                         See More <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -628,7 +627,7 @@
                     <div class="download-info">
                         <i class="fas fa-download"></i> 140K+ Downloads
                     </div>
-                    <a href="https://shaderminecraft.github.io/shaderminecraft/shaderminecraft-web/lbtshader" class="view-details">
+                    <a href="https://shaderminecraft.github.io/lbtshader" class="view-details">
                         See More <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -801,10 +800,10 @@
         // Initialize both carousels
         document.addEventListener('DOMContentLoaded', function() {
             // G-Lime Shader
-            initCarousel('carousel1', 'nav1', 'https://shaderminecraft.github.io/shaderminecraft/shaderminecraft-web/glimeshader');
+            initCarousel('carousel1', 'nav1', 'https://shaderminecraft.github.io/glimeshader');
             
             // LBT Shader
-            initCarousel('carousel2', 'nav2', 'https://shaderminecraft.github.io/shaderminecraft/shaderminecraft-web/lbtshader');
+            initCarousel('carousel2', 'nav2', 'https://shaderminecraft.github.io/lbtshader');
             
             // Add click events to main thumbnails and preview images
             const gLimeCard = document.getElementById('g-lime-shader');
@@ -812,30 +811,30 @@
             
             // G-Lime Shader click events
             gLimeCard.querySelector('.main-thumbnail').addEventListener('click', function() {
-                window.location.href = 'https://shaderminecraft.github.io/shaderminecraft/shaderminecraft-web/glimeshader';
+                window.location.href = 'https://shaderminecraft.github.io/glimeshader';
             });
             
             gLimeCard.querySelectorAll('.preview-image').forEach(img => {
                 img.addEventListener('click', function(e) {
                     if (!e.target.closest('.carousel-container').isDragging) {
-                        window.location.href = 'https://shaderminecraft.github.io/shaderminecraft/shaderminecraft-web/glimeshader';
+                        window.location.href = 'https://shaderminecraft.github.io/glimeshader';
                     }
                 });
             });
             
             // LBT Shader click events
             lbtCard.querySelector('.main-thumbnail').addEventListener('click', function() {
-                window.location.href = 'https://shaderminecraft.github.io/shaderminecraft/shaderminecraft-web/lbtshader';
+                window.location.href = 'https://shaderminecraft.github.io/lbtshader';
             });
             
             lbtCard.querySelectorAll('.preview-image').forEach(img => {
                 img.addEventListener('click', function(e) {
                     if (!e.target.closest('.carousel-container').isDragging) {
-                        window.location.href = 'https://shaderminecraft.github.io/shaderminecraft/shaderminecraft-web/lbtshader';
+                        window.location.href = 'https://shaderminecraft.github.io/lbtshader';
                     }
                 });
             });
         });
     </script>
 </body>
-                              </html>
+</html>
