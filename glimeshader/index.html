@@ -37,6 +37,11 @@
             overflow-x: hidden;
         }
 
+        /* Remove blue outline on click for all elements */
+        *:focus {
+            outline: none;
+        }
+
         /* Header Styles */
         header {
             background-color: var(--bg-primary);
@@ -155,6 +160,16 @@
         .creator-name {
             color: var(--accent-primary);
             font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 2px;
+        }
+
+        .creator-name:hover {
+            color: var(--accent-secondary);
+            text-decoration-color: var(--accent-secondary);
         }
 
         .main-image-container {
@@ -401,6 +416,21 @@
             color: var(--text-medium);
         }
 
+        .related-creator-name {
+            color: var(--accent-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 2px;
+        }
+
+        .related-creator-name:hover {
+            color: var(--accent-secondary);
+            text-decoration-color: var(--accent-secondary);
+        }
+
         /* Footer */
         footer {
             background-color: #f0e9d9;
@@ -551,7 +581,7 @@
         <section class="hero-section">
             <div class="shader-header">
                 <h1 class="shader-title">G-Lime Shader (Essence Version)</h1>
-                <p class="shader-creator">By <span class="creator-name">DirgaAS</span></p>
+                <p class="shader-creator">By <span class="creator-name" onclick="window.open('https://Instagram.com/dirgaas._', '_blank')">DirgaAS</span></p>
             </div>
             
             <div class="main-image-container">
@@ -742,7 +772,7 @@
                          alt="LBT shader" class="related-image">
                     <div class="related-info">
                         <div class="related-title">LBT Shader</div>
-                        <div class="related-creator">By anuGrahbodi133</div>
+                        <div class="related-creator">By <span class="related-creator-name" onclick="window.open('https://Instagram.com/anugrahbodi123', '_blank')">anuGrahbodi123</span></div>
                     </div>
                 </div>
                 
@@ -751,7 +781,7 @@
                          alt="G-Lime Shader (ESSENCE VERSION)" class="related-image">
                     <div class="related-info">
                         <div class="related-title">G-Lime Shader (ESSENCE VERSION)</div>
-                        <div class="related-creator">By DirgaAS</div>
+                        <div class="related-creator">By <span class="related-creator-name" onclick="window.open('https://Instagram.com/dirgaas._', '_blank')">DirgaAS</span></div>
                     </div>
                 </div>
                 
@@ -830,4 +860,4 @@
         });
     </script>
 </body>
-                                  </html>
+</html>
