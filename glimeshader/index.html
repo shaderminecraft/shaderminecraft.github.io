@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G-Lime Shader (ESSENCE VERSION) - ShaderMinecraft.github.io</title>
+    <title>G-Lime Shader (ESSENCE VERSION) - shaderminecraft</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -57,8 +57,9 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Center the logo */
             align-items: center;
+            position: relative; /* For mobile menu positioning */
         }
 
         .logo {
@@ -79,6 +80,8 @@
         .nav-links {
             display: flex;
             list-style: none;
+            position: absolute;
+            right: 0;
         }
 
         .nav-links li {
@@ -508,14 +511,16 @@
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
             }
 
             .nav-links {
+                position: static;
                 margin-top: 1.2rem;
                 flex-direction: column;
                 width: 100%;
                 display: none;
+                text-align: center;
             }
 
             .nav-links.show {
@@ -561,9 +566,10 @@
         <div class="header-container">
             <a href="#" class="logo">
                 <i class="fas fa-gem"></i>
-                shaderminecraft.github.io
+                ShaderMinecraft
             </a>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class=""></i>
             </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="active">Home</a></li>
@@ -801,7 +807,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-column">
-                <h3>shaderminecraft.github.io</h3>
+                <h3>shaderminecraft</h3>
                 <p>Your ultimate destination for the best Minecraft Pocket Edition shaders. Transform your gameplay with stunning visual enhancements.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-discord"></i></a>
@@ -832,7 +838,7 @@
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2025 shaderminecraft.github.io. All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>
+            <p>&copy; 2025 shaderminecraft. All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>
         </div>
     </footer>
 
@@ -860,4 +866,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
