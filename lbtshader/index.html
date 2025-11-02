@@ -1,1 +1,789 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LBT Shader - ShaderMinecraft.github.io</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f8f4e9;
+            --card-bg: #ffffff;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --accent-primary: #c9a96e;
+            --accent-secondary: #d4b885;
+            --border-color: #e8e0ce;
+            --shadow: 0 4px 12px rgba(201, 169, 110, 0.2);
+            --transition: all 0.3s ease;
+            --dark-bg: #1a1a1a;
+            --minecraft-green: #3b8526;
+            --minecraft-dark-green: #2a5c1e;
+            --minecraft-light-green: #5aa341;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--bg-primary);
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.6rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background-color: var(--card-bg);
+        }
+
+        .shader-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .shader-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .shader-creator {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+        }
+
+        .creator-name {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .main-image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        .preview-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 1rem;
+            gap: 0.8rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-primary) var(--bg-primary);
+        }
+
+        .preview-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .preview-container::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+            border-radius: 10px;
+        }
+
+        .preview-container::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 10px;
+        }
+
+        .preview-image {
+            width: 120px;
+            height: 67.5px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .preview-image:hover, .preview-image.active {
+            opacity: 1;
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        /* Download Section */
+        .download-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(201, 169, 110, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(201, 169, 110, 0.4);
+        }
+
+        .download-info {
+            margin-top: 1rem;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Shader Information */
+        .info-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-primary);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background-color: rgba(201, 169, 110, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .star-rating {
+            color: #ffc107;
+            margin-right: 0.5rem;
+        }
+
+        .description {
+            line-height: 1.7;
+            color: var(--text-medium);
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .review-card {
+            background-color: rgba(201, 169, 110, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer {
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+
+        .review-date {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        .review-content {
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* Related Shaders */
+        .related-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .related-shader {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .related-shader:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .related-image {
+            width: 100%;
+            height: 157.5px;
+            object-fit: cover;
+        }
+
+        .related-info {
+            padding: 1rem;
+        }
+
+        .related-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .related-creator {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f0e9d9;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-column h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.9rem;
+        }
+
+        .footer-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+            padding-left: 8px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(201, 169, 110, 0.1);
+            color: var(--accent-primary);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent-primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                margin-top: 1.2rem;
+                flex-direction: column;
+                width: 100%;
+                display: none;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.6rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 2rem;
+                top: 1.2rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .shader-title {
+                font-size: 1.8rem;
+            }
+
+            .shader-header {
+                padding: 1rem 1.5rem;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-gem"></i>
+                shaderminecraft.github.io
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Shaders</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="shader-header">
+                <h1 class="shader-title">LBT Shader</h1>
+                <p class="shader-creator">By <span class="creator-name">anuGrahbodi123</span></p>
+            </div>
+            
+            <div class="main-image-container">
+                <img id="mainImage" src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" 
+                     alt="LBT Shader" class="main-image">
+            </div>
+            
+            <div class="preview-container">
+                <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" 
+                     alt="Preview 1" class="preview-image active" 
+                     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg">
+                <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-day-1.jpg" 
+                     alt="Preview 2" class="preview-image active" 
+                     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-day-1.jpg">
+                <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-sunset-1.jpg" 
+                     alt="Preview 3" class="preview-image" 
+                     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-sunset-1.jpg">
+                <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-1.jpg" 
+                     alt="Preview 4" class="preview-image" 
+                     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-1.jpg">
+                <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-rain-1.jpg" 
+                     alt="Preview 5" class="preview-image" 
+                     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-rain-1.jpg">
+                <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-2.jpg" 
+                     alt="Preview 6" class="preview-image" 
+                     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-2.jpg">
+                <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-nether-1.jpg" 
+                     alt="Preview 7" class="preview-image" 
+                     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-nether-1.jpg">
+                <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-end-1.jpg" 
+                     alt="Preview 8" class="preview-image" 
+                     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-end-1.jpg">
+            </div>
+        </section>
+        
+        <!-- Download Section -->
+        <section class="download-section">
+            <a href="https://direct-link.net/885163/b1XqsSVfRjsX" class="download-btn">
+                <i class="fas fa-download"></i> DOWNLOAD SHADER
+            </a>
+            <div class="download-info">
+                <p>Version 1.0.8 | File Size: 96.02KB | 140K+ Downloads</p>
+            </div>
+        </section>
+        
+        <!-- Shader Information -->
+        <section class="info-section">
+            <h2 class="section-title">Shader Information</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-label">Version</div>
+                    <div class="info-value">v1.0.8</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Compatibility</div>
+                    <div class="info-value">Minecraft 1.16.0+</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Rating</div>
+                    <div class="info-value">
+                        <span class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </span>
+                        4.5/5
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Downloads</div>
+                    <div class="info-value">140K+</div>
+                </div>
+            </div>
+            
+            <h3>Description</h3>
+            <p class="description">
+                LBT Shader transforms your Minecraft world with stunning visual effects and realistic lighting. This shader enhances the colors of day, night, rain, torch lighting, and more, creating a beautiful and immersive experience.
+                <br><br>
+                With enhanced fog effects, realistic water reflections, and optimized performance, LBT Shader makes your world feel more alive and atmospheric, perfect for both exploration and building.
+            </p>
+        </section>
+        
+        <!-- User Reviews -->
+        <section class="reviews-section">
+            <h2 class="section-title">User Reviews</h2>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <span class="reviewer">Unavailable</span>
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="review-content">-</p>
+                <div class="review-date">-</div>
+            </div>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <span class="reviewer">Unavailable</span>
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                <p class="review-content">-</p>
+                <div class="review-date">-</div>
+            </div>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <span class="reviewer">Unavailable</span>
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <p class="review-content">-</p>
+                <div class="review-date">-</div>
+            </div>
+        </section>
+        
+        <!-- Related Content -->
+        <section class="related-section">
+            <h2 class="section-title">You Might Also Like</h2>
+            
+            <div class="related-grid">
+                <div class="related-shader">
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" 
+                         alt="G-Lime Shader (ESSENCE VERSION)" class="related-image">
+                    <div class="related-info">
+                        <div class="related-title">G-Lime Shader (ESSENCE VERSION)</div>
+                        <div class="related-creator">By DirgaAS</div>
+                    </div>
+                </div>
+                
+                <div class="related-shader">
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" 
+                         alt="LBT Shader" class="related-image">
+                    <div class="related-info">
+                        <div class="related-title">LBT Shader</div>
+                        <div class="related-creator">By anuGrahbodi123</div>
+                    </div>
+                </div>
+                
+                <div class="related-shader">
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/images/unavailable-image.jpg" 
+                         alt="Unavailabe yet" class="related-image">
+                    <div class="related-info">
+                        <div class="related-title">Unavailable yet</div>
+                        <div class="related-creator">Unavailable</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>shaderminecraft.github.io</h3>
+                <p>Your ultimate destination for the best Minecraft Pocket Edition shaders. Transform your gameplay with stunning visual enhancements.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-reddit"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">All Shaders</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Top Downloads</a></li>
+                    <li><a href="#">Latest Updates</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Installation Guide</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Troubleshooting</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Submit a Shader</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 shaderminecraft.github.io. All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('show');
+        });
+
+        // Image switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const previewImages = document.querySelectorAll('.preview-image');
+            const mainImage = document.getElementById('mainImage');
+            
+            previewImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    // Update main image
+                    mainImage.src = this.getAttribute('data-full');
+                    
+                    // Update active state
+                    previewImages.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+                                                           </html>
