@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shader Minecraft - Best MCPE Shaders</title>
+    <title>G-Lime Shader (ESSENCE VERSION) - Shader Minecraft</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #f8f4e9; /* Whitened gold background */
+            --bg-primary: #f8f4e9;
             --card-bg: #ffffff;
             --text-dark: #333333;
             --text-medium: #555555;
-            --accent-primary: #c9a96e; /* Rich gold */
-            --accent-secondary: #d4b885; /* Lighter gold */
+            --accent-primary: #c9a96e;
+            --accent-secondary: #d4b885;
             --border-color: #e8e0ce;
             --shadow: 0 4px 12px rgba(201, 169, 110, 0.2);
             --transition: all 0.3s ease;
+            --dark-bg: #1a1a1a;
+            --minecraft-green: #3b8526;
+            --minecraft-dark-green: #2a5c1e;
+            --minecraft-light-green: #5aa341;
         }
 
         * {
@@ -30,6 +35,11 @@
             color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Remove blue outline on click for all elements */
+        *:focus {
+            outline: none;
         }
 
         /* Header Styles */
@@ -67,283 +77,315 @@
             font-size: 1.6rem;
         }
 
-        /* Shader Cards Section */
-        .shader-section {
+        /* Main Content */
+        .main-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background-color: var(--card-bg);
+        }
+
+        .shader-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .shader-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .shader-creator {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+        }
+
+        .creator-name {
+            color: var(--accent-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 2px;
+        }
+
+        .creator-name:hover {
+            color: var(--accent-secondary);
+            text-decoration-color: var(--accent-secondary);
+        }
+
+        .main-image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+            aspect-ratio: 16/9;
+        }
+
+        .preview-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 1rem;
+            gap: 0.8rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-primary) var(--bg-primary);
+        }
+
+        .preview-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .preview-container::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+            border-radius: 10px;
+        }
+
+        .preview-container::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 10px;
+        }
+
+        .preview-image {
+            width: 120px;
+            height: 67.5px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            aspect-ratio: 16/9;
+        }
+
+        .preview-image:hover, .preview-image.active {
+            opacity: 1;
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        /* Download Section */
+        .download-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(201, 169, 110, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(201, 169, 110, 0.4);
+        }
+
+        .download-info {
+            margin-top: 1rem;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Shader Information */
+        .info-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
         }
 
         .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
             color: var(--accent-primary);
+            position: relative;
+            padding-bottom: 0.5rem;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
+            bottom: 0;
+            left: 0;
+            width: 60px;
             height: 3px;
             background-color: var(--accent-primary);
         }
 
-        .shader-grid {
+        .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .shader-card {
+        .info-card {
+            background-color: rgba(201, 169, 110, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .star-rating {
+            color: #ffc107;
+            margin-right: 0.5rem;
+        }
+
+        .description {
+            line-height: 1.7;
+            color: var(--text-medium);
+        }
+
+        /* Reviews Section */
+        .reviews-section {
             background-color: var(--card-bg);
-            overflow: hidden;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--border-color);
-            position: relative;
         }
 
-        .shader-card:hover {
+        .review-card {
+            background-color: rgba(201, 169, 110, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer {
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+
+        .review-date {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        .review-content {
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* Related Shaders */
+        .related-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .related-shader {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .related-shader:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
-        .card-header {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-thumbnail {
+        .related-image {
             width: 100%;
-            height: 200px;
+            height: 157.5px;
             object-fit: cover;
-            transition: var(--transition);
-            cursor: pointer;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 16/9;
         }
 
-        .shader-card:hover .main-thumbnail {
-            transform: scale(1.03);
+        .related-info {
+            padding: 1rem;
         }
 
-        .shader-name-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+        .related-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
         }
 
-        .shader-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
+        .related-creator {
+            font-size: 0.9rem;
+            color: var(--text-medium);
         }
 
-        .version-badge {
-            background: rgba(0, 0, 0, 0.7);
+        .related-creator-name {
             color: var(--accent-primary);
-            padding: 0.3rem 0.8rem;
-            font-size: 0.8rem;
             font-weight: 600;
-            border: 1px solid rgba(201, 169, 110, 0.5);
-        }
-
-        .creator-info {
-            display: flex;
-            align-items: center;
-            padding: 1rem 1.2rem 0.5rem;
             cursor: pointer;
-            outline: none; /* Remove outline */
-        }
-
-        .creator-pfp {
-            width: 36px;
-            height: 36px;
-            object-fit: cover;
-            margin-right: 10px;
-            border: 2px solid var(--accent-primary);
-            aspect-ratio: 1 / 1;
-        }
-
-        .creator-details {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .creator-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--accent-primary);
             transition: var(--transition);
-            text-decoration: underline; /* Add underline */
-            text-decoration-color: transparent; /* Make underline transparent by default */
-            text-underline-offset: 2px; /* Position the underline */
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 2px;
         }
 
-        .creator-info:hover .creator-name {
+        .related-creator-name:hover {
             color: var(--accent-secondary);
-            text-decoration-color: var(--accent-secondary); /* Show underline on hover */
-        }
-
-        .upload-date {
-            font-size: 0.75rem;
-            opacity: 0.7;
-            color: var(--text-medium);
-        }
-
-        .preview-carousel {
-            padding: 0.5rem 1.2rem 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .carousel-container {
-            display: flex;
-            overflow: hidden;
-            gap: 0.5rem;
-            padding-bottom: 0.5rem;
-            width: 100%;
-            cursor: grab;
-        }
-
-        .carousel-container:active {
-            cursor: grabbing;
-        }
-
-        .carousel-track {
-            display: flex;
-            gap: 0.5rem;
-            transition: transform 0.5s ease;
-            user-select: none;
-        }
-
-        .preview-image {
-            width: 90px;
-            height: 70px;
-            object-fit: cover;
-            flex-shrink: 0;
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-            cursor: pointer;
-            aspect-ratio: 16 / 9;
-        }
-
-        .preview-image:hover {
-            border-color: var(--accent-primary);
-            transform: scale(1.05);
-        }
-
-        .preview-image.active {
-            border-color: var(--accent-primary);
-            transform: scale(1.05);
-            box-shadow: 0 0 8px rgba(201, 169, 110, 0.5);
-        }
-
-        .carousel-nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            gap: 8px;
-        }
-
-        .carousel-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--border-color);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .carousel-dot.active {
-            background-color: var(--accent-primary);
-            transform: scale(1.2);
-        }
-
-        .card-content {
-            padding: 0 1.2rem 1.2rem;
-        }
-
-        .shader-description {
-            color: var(--text-medium);
-            margin-bottom: 1.2rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.5;
-            font-size: 0.95rem;
-        }
-
-        .shader-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-
-        .shader-tag {
-            background-color: rgba(201, 169, 110, 0.1);
-            color: var(--accent-primary);
-            padding: 0.4rem 0.9rem;
-            font-size: 0.8rem;
-            border: 1px solid rgba(201, 169, 110, 0.3);
-            font-weight: 500;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.2rem;
-            border-top: 1px solid var(--border-color);
-            background: rgba(248, 244, 233, 0.5);
-        }
-
-        .download-info {
-            display: flex;
-            align-items: center;
-            color: var(--text-medium);
-            font-size: 0.85rem;
-        }
-
-        .download-info i {
-            margin-right: 6px;
-            color: var(--accent-primary);
-        }
-
-        .view-details {
-            color: var(--accent-primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-
-        .view-details i {
-            margin-left: 5px;
-            transition: var(--transition);
-            font-size: 0.8rem;
-        }
-
-        .view-details:hover {
-            color: var(--accent-secondary);
-        }
-
-        .view-details:hover i {
-            transform: translateX(3px);
+            text-decoration-color: var(--accent-secondary);
         }
 
         /* Footer */
@@ -419,11 +461,6 @@
             font-size: 0.9rem;
         }
 
-        /* Remove blue outline on click for all elements */
-        *:focus {
-            outline: none;
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-container {
@@ -431,12 +468,24 @@
                 align-items: center;
             }
 
-            .shader-grid {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .shader-title {
+                font-size: 1.8rem;
+            }
+
+            .shader-header {
+                padding: 1rem 1.5rem;
+            }
+
+            .related-grid {
                 grid-template-columns: 1fr;
             }
 
-            .section-title {
-                font-size: 2rem;
+            .info-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -452,129 +501,227 @@
         </div>
     </header>
 
-    <!-- Shader Cards Section -->
-    <section class="shader-section">
-        <h2 class="section-title">Featured Shader Packs</h2>
-        <div class="shader-grid">
-            <!-- G-Lime Shader Card -->
-            <div class="shader-card" id="g-lime-shader">
-                <div class="card-header">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" alt="G-Lime Shader Preview" class="main-thumbnail">
-                    <div class="shader-name-container">
-                        <div class="shader-name">G-Lime Shader</div>
-                        <div class="version-badge">v2.0.0</div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="shader-header">
+                <h1 class="shader-title">G-Lime Shader (Essence Version)</h1>
+                <p class="shader-creator">By <span class="creator-name" onclick="window.open('https://Instagram.com/dirgaas._', '_blank')">DirgaAS</span></p>
+            </div>
+            
+            <div class="main-image-container">
+                <img id="mainImage" src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" 
+                     alt="G-Lime Shader (ESSENCE VERSION)" class="main-image">
+            </div>
+            
+            <div class="preview-container">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" 
+     alt="Preview 1" class="preview-image active" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-1.jpg" 
+     alt="Preview 2" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-1.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-2.jpg" 
+     alt="Preview 3" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-2.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-3.jpg" 
+     alt="Preview 4" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-3.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-4.jpg" 
+     alt="Preview 5" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-4.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-5.jpg" 
+     alt="Preview 6" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-5.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-6.jpg" 
+     alt="Preview 7" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-6.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-7.jpg" 
+     alt="Preview 8" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-7.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-8.jpg" 
+     alt="Preview 9" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-8.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-9.jpg" 
+     alt="Preview 10" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-9.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-10.jpg" 
+     alt="Preview 11" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-10.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-11.jpg" 
+     alt="Preview 12" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-11.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-12.jpg" 
+     alt="Preview 13" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-12.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-1.jpg" 
+     alt="Preview 14" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-1.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-2.jpg" 
+     alt="Preview 15" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-2.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-3.jpg" 
+     alt="Preview 16" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-3.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-4.jpg" 
+     alt="Preview 17" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-4.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-5.jpg" 
+     alt="Preview 18" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-sunset-5.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-underwater-1.jpg" 
+     alt="Preview 19" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-underwater-1.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-underwater-2.jpg" 
+     alt="Preview 20" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-underwater-2.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-night-1.jpg" 
+     alt="Preview 21" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-night-1.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-night-2.jpg" 
+     alt="Preview 22" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-night-2.jpg">
+<img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-night-3.jpg" 
+     alt="Preview 23" class="preview-image" 
+     data-full="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-night-3.jpg">
+            </div>
+        </section>
+        
+        <!-- Download Section -->
+        <section class="download-section">
+            <a href="https://direct-link.net/885163/b1XqsSVfRjsX" class="download-btn">
+                <i class="fas fa-download"></i> DOWNLOAD SHADER
+            </a>
+            <div class="download-info">
+                <p>Version 2.0.0 | File Size: 75.51 KB | 12.7K+ Downloads</p>
+            </div>
+        </section>
+        
+        <!-- Shader Information -->
+        <section class="info-section">
+            <h2 class="section-title">Shader Information</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-label">Version</div>
+                    <div class="info-value">v2.0.0</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Compatibility</div>
+                    <div class="info-value">Minecraft 1.21.90+</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Rating</div>
+                    <div class="info-value">
+                        <span class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </span>
+                        4.5/5
                     </div>
                 </div>
-                
-                <div class="creator-info" onclick="window.open('https://Instagram.com/dirgaas._', '_blank')">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-dirgaas.webp" alt="Creator" class="creator-pfp">
-                    <div class="creator-details">
-                        <div class="creator-name">DirgaAS</div>
-                        <div class="upload-date" id="g-lime-date">Updated: <span class="date-text">Loading...</span></div>
-                    </div>
-                </div>
-                
-                <div class="preview-carousel">
-                    <div class="carousel-container" id="carousel1">
-                        <div class="carousel-track">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-1.jpg" alt="Preview 1" class="preview-image active">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-2.jpg" alt="Preview 2" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-3.jpg" alt="Preview 3" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-4.jpg" alt="Preview 4" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-5.jpg" alt="Preview 5" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-6.jpg" alt="Preview 6" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-7.jpg" alt="Preview 7" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-8.jpg" alt="Preview 8" class="preview-image">
-                        </div>
-                    </div>
-                    <div class="carousel-nav" id="nav1">
-                        <div class="carousel-dot active" data-index="0"></div>
-                        <div class="carousel-dot" data-index="1"></div>
-                        <div class="carousel-dot" data-index="2"></div>
-                        <div class="carousel-dot" data-index="3"></div>
-                        <div class="carousel-dot" data-index="4"></div>
-                        <div class="carousel-dot" data-index="5"></div>
-                        <div class="carousel-dot" data-index="6"></div>
-                        <div class="carousel-dot" data-index="7"></div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="shader-description">The definitive, clean version of the G-Lime shader. It gives your world that perfect green-lime glow, making everything feel more vibrant and peaceful all while keeping the simple charm of vanilla Minecraft.</p>
-                    <div class="shader-tags">
-                        <span class="shader-tag">Realistic</span>
-                        <span class="shader-tag">Performance</span>
-                        <span class="shader-tag">Optimized</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="download-info">
-                        <i class="fas fa-download"></i> 12.7K Downloads
-                    </div>
-                    <a href="https://shaderminecraft.github.io/glimeshader" class="view-details">
-                        See More <i class="fas fa-arrow-right"></i>
-                    </a>
+                <div class="info-card">
+                    <div class="info-label">Downloads</div>
+                    <div class="info-value">12.7K+</div>
                 </div>
             </div>
-
-            <!-- LBT Shader Card -->
-            <div class="shader-card" id="lbt-shader">
-                <div class="card-header">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" alt="LBT Shader Preview" class="main-thumbnail">
-                    <div class="shader-name-container">
-                        <div class="shader-name">LBT Shader</div>
-                        <div class="version-badge">v1.0.8</div>
+            
+            <h3>Description</h3>
+            <p class="description">
+                The definitive, clean version of the G-Lime shader. It gives your world that perfect green-lime glow, making everything feel more vibrant and peaceful all while keeping the simple charm of vanilla Minecraft.
+                <br><br>
+                Whether you're exploring forests, building villages, or just enjoying the view, G-Lime makes your world feel more alive and soothing, perfect for chill play sessions or aesthetic screenshots.
+            </p>
+        </section>
+        
+        <!-- User Reviews -->
+        <section class="reviews-section">
+            <h2 class="section-title">User Reviews</h2>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <span class="reviewer">Unavailable</span>
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="review-content">-</p>
+                <div class="review-date">-</div>
+            </div>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <span class="reviewer">Unavailable</span>
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                <p class="review-content">-</p>
+                <div class="review-date">-</div>
+            </div>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <span class="reviewer">Unavailable</span>
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <p class="review-content">-</p>
+                <div class="review-date">-</div>
+            </div>
+        </section>
+        
+        <!-- Related Content -->
+        <section class="related-section">
+            <h2 class="section-title">You Might Also Like</h2>
+            
+            <div class="related-grid">
+                <div class="related-shader">
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" 
+                         alt="LBT shader" class="related-image">
+                    <div class="related-info">
+                        <div class="related-title">LBT Shader</div>
+                        <div class="related-creator">By <span class="related-creator-name" onclick="window.open('https://Instagram.com/anugrahbodi123', '_blank')">anuGrahbodi123</span></div>
                     </div>
                 </div>
                 
-                <div class="creator-info" onclick="window.open('https://Instagram.com/anugrahbodi123', '_blank')">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-anugrahbodi123.webp" alt="Creator" class="creator-pfp">
-                    <div class="creator-details">
-                        <div class="creator-name">anuGrahbodi123</div>
-                        <div class="upload-date" id="lbt-date">Updated: <span class="date-text">Loading...</span></div>
+                <div class="related-shader">
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" 
+                         alt="G-Lime Shader (ESSENCE VERSION)" class="related-image">
+                    <div class="related-info">
+                        <div class="related-title">G-Lime Shader (ESSENCE VERSION)</div>
+                        <div class="related-creator">By <span class="related-creator-name" onclick="window.open('https://Instagram.com/dirgaas._', '_blank')">DirgaAS</span></div>
                     </div>
                 </div>
                 
-                <div class="preview-carousel">
-                    <div class="carousel-container" id="carousel2">
-                        <div class="carousel-track">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-day-1.jpg" alt="Preview 1" class="preview-image active">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-sunset-1.jpg" alt="Preview 2" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-1.jpg" alt="Preview 3" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-rain-1.jpg" alt="Preview 4" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-2.jpg" alt="Preview 5" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-nether-1.jpg" alt="Preview 6" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-end-1.jpg" alt="Preview 7" class="preview-image">
-                        </div>
+                <div class="related-shader">
+                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/images/unavailable-image.jpg" 
+                         alt="Unavailabe yet" class="related-image">
+                    <div class="related-info">
+                        <div class="related-title">Unavailable yet</div>
+                        <div class="related-creator">Unavailable</div>
                     </div>
-                    <div class="carousel-nav" id="nav2">
-                        <div class="carousel-dot active" data-index="0"></div>
-                        <div class="carousel-dot" data-index="1"></div>
-                        <div class="carousel-dot" data-index="2"></div>
-                        <div class="carousel-dot" data-index="3"></div>
-                        <div class="carousel-dot" data-index="4"></div>
-                        <div class="carousel-dot" data-index="5"></div>
-                        <div class="carousel-dot" data-index="6"></div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="shader-description">LBT Shader. This shader will make your world more beautiful by changing the colors of day, night, rain, torch, and more. This shader will also make fog in your world more beautiful.</p>
-                    <div class="shader-tags">
-                        <span class="shader-tag">Water Effects</span>
-                        <span class="shader-tag">Performance</span>
-                        <span class="shader-tag">Low-End</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="download-info">
-                        <i class="fas fa-download"></i> 140K+ Downloads
-                    </div>
-                    <a href="https://shaderminecraft.github.io/lbtshader" class="view-details">
-                        See More <i class="fas fa-arrow-right"></i>
-                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -616,177 +763,19 @@
     </footer>
 
     <script>
-        // Date calculation function - now showing "X days ago" format
-        function getDaysAgo(days) {
-            if (days === 0) return "Today";
-            if (days === 1) return "1 day ago";
-            return `${days} days ago`;
-        }
-
-        // Update date elements
-        function updateDates() {
-            // G-Lime Shader (2 days ago)
-            document.querySelector('#g-lime-date .date-text').textContent = getDaysAgo(2);
-            
-            // LBT Shader (7 days ago)
-            document.querySelector('#lbt-date .date-text').textContent = getDaysAgo(7);
-        }
-
-        // Initialize carousels with improved functionality
-        function initCarousel(carouselId, navId, shaderLink) {
-            const carousel = document.getElementById(carouselId);
-            const track = carousel.querySelector('.carousel-track');
-            const images = track.querySelectorAll('.preview-image');
-            const nav = document.getElementById(navId);
-            const dots = nav.querySelectorAll('.carousel-dot');
-            const containerWidth = carousel.offsetWidth;
-            const imageWidth = 90; // width of each preview image
-            const gap = 8; // gap between images
-            const visibleCount = Math.floor(containerWidth / (imageWidth + gap));
-            
-            let currentIndex = 0;
-            let isDragging = false;
-            let startPos = 0;
-            let currentTranslate = 0;
-            let prevTranslate = 0;
-            let animationID;
-            
-            // Function to update carousel position
-            function updateCarousel() {
-                const translateX = -currentIndex * (imageWidth + gap);
-                track.style.transform = `translateX(${translateX}px)`;
-                
-                // Update active states
-                images.forEach((img, index) => {
-                    img.classList.toggle('active', index === currentIndex);
-                });
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
-            }
-            
-            // Click on dots to navigate
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentIndex = index;
-                    updateCarousel();
-                });
-            });
-            
-            // Click on images to navigate or open link
-            images.forEach((img, index) => {
-                img.addEventListener('click', (e) => {
-                    // Only navigate if not dragging
-                    if (!isDragging) {
-                        currentIndex = index;
-                        updateCarousel();
-                    }
-                });
-            });
-            
-            // Auto-advance carousel
-            setInterval(() => {
-                if (!isDragging) {
-                    currentIndex = (currentIndex + 1) % images.length;
-                    updateCarousel();
-                }
-            }, 2000);
-            
-            // Drag functionality for carousel
-            function startDrag(e) {
-                isDragging = true;
-                startPos = getPositionX(e);
-                track.style.cursor = 'grabbing';
-                track.style.userSelect = 'none';
-                
-                // Cancel animation frame if any
-                cancelAnimationFrame(animationID);
-            }
-            
-            function drag(e) {
-                if (isDragging) {
-                    const currentPosition = getPositionX(e);
-                    currentTranslate = prevTranslate + currentPosition - startPos;
-                }
-            }
-            
-            function endDrag() {
-                isDragging = false;
-                track.style.cursor = 'grab';
-                
-                const movedBy = currentTranslate - prevTranslate;
-                
-                // If moved enough to change slide
-                if (movedBy < -50 && currentIndex < images.length - 1) {
-                    currentIndex += 1;
-                }
-                
-                if (movedBy > 50 && currentIndex > 0) {
-                    currentIndex -= 1;
-                }
-                
-                updateCarousel();
-                prevTranslate = -currentIndex * (imageWidth + gap);
-            }
-            
-            function getPositionX(e) {
-                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            }
-            
-            // Mouse events
-            carousel.addEventListener('mousedown', startDrag);
-            carousel.addEventListener('mousemove', drag);
-            carousel.addEventListener('mouseup', endDrag);
-            carousel.addEventListener('mouseleave', endDrag);
-            
-            // Touch events
-            carousel.addEventListener('touchstart', startDrag);
-            carousel.addEventListener('touchmove', drag);
-            carousel.addEventListener('touchend', endDrag);
-            
-            // Initialize
-            updateCarousel();
-        }
-        
-        // Initialize both carousels
+        // Image switching functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Update dates
-            updateDates();
+            const previewImages = document.querySelectorAll('.preview-image');
+            const mainImage = document.getElementById('mainImage');
             
-            // G-Lime Shader
-            initCarousel('carousel1', 'nav1', 'https://shaderminecraft.github.io/glimeshader');
-            
-            // LBT Shader
-            initCarousel('carousel2', 'nav2', 'https://shaderminecraft.github.io/lbtshader');
-            
-            // Add click events to main thumbnails and preview images
-            const gLimeCard = document.getElementById('g-lime-shader');
-            const lbtCard = document.getElementById('lbt-shader');
-            
-            // G-Lime Shader click events
-            gLimeCard.querySelector('.main-thumbnail').addEventListener('click', function() {
-                window.location.href = 'https://shaderminecraft.github.io/glimeshader';
-            });
-            
-            gLimeCard.querySelectorAll('.preview-image').forEach(img => {
-                img.addEventListener('click', function(e) {
-                    if (!e.target.closest('.carousel-container').isDragging) {
-                        window.location.href = 'https://shaderminecraft.github.io/glimeshader';
-                    }
-                });
-            });
-            
-            // LBT Shader click events
-            lbtCard.querySelector('.main-thumbnail').addEventListener('click', function() {
-                window.location.href = 'https://shaderminecraft.github.io/lbtshader';
-            });
-            
-            lbtCard.querySelectorAll('.preview-image').forEach(img => {
-                img.addEventListener('click', function(e) {
-                    if (!e.target.closest('.carousel-container').isDragging) {
-                        window.location.href = 'https://shaderminecraft.github.io/lbtshader';
-                    }
+            previewImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    // Update main image
+                    mainImage.src = this.getAttribute('data-full');
+                    
+                    // Update active state
+                    previewImages.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
                 });
             });
         });
