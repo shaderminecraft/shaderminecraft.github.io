@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G-Lime Shader (ESSENCE VERSION) - shaderminecraft</title>
+    <title>G-Lime Shader (ESSENCE VERSION) - Shader Minecraft</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -77,55 +77,6 @@
             font-size: 1.6rem;
         }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            position: absolute;
-            right: 0;
-        }
-
-        .nav-links li {
-            margin-left: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            padding: 0.5rem 0;
-            position: relative;
-            font-size: 1.05rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent-primary);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-dark);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
         /* Main Content */
         .main-content {
             max-width: 1200px;
@@ -187,6 +138,7 @@
             height: 100%;
             object-fit: cover;
             transition: opacity 0.5s ease;
+            aspect-ratio: 16/9;
         }
 
         .preview-container {
@@ -221,6 +173,7 @@
             opacity: 0.7;
             transition: var(--transition);
             border: 2px solid transparent;
+            aspect-ratio: 16/9;
         }
 
         .preview-image:hover, .preview-image.active {
@@ -402,6 +355,7 @@
             width: 100%;
             height: 157.5px;
             object-fit: cover;
+            aspect-ratio: 16/9;
         }
 
         .related-info {
@@ -514,30 +468,6 @@
                 align-items: center;
             }
 
-            .nav-links {
-                position: static;
-                margin-top: 1.2rem;
-                flex-direction: column;
-                width: 100%;
-                display: none;
-                text-align: center;
-            }
-
-            .nav-links.show {
-                display: flex;
-            }
-
-            .nav-links li {
-                margin: 0.6rem 0;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-                position: absolute;
-                right: 2rem;
-                top: 1.2rem;
-            }
-
             .main-content {
                 padding: 1rem;
             }
@@ -566,18 +496,8 @@
         <div class="header-container">
             <a href="#" class="logo">
                 <i class="fas fa-gem"></i>
-                ShaderMinecraft
+                Shader Minecraft
             </a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class=""></i>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#">Shaders</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
         </div>
     </header>
 
@@ -807,7 +727,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-column">
-                <h3>shaderminecraft</h3>
+                <h3>Shader Minecraft</h3>
                 <p>Your ultimate destination for the best Minecraft Pocket Edition shaders. Transform your gameplay with stunning visual enhancements.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-discord"></i></a>
@@ -838,16 +758,11 @@
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2025 shaderminecraft. All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>
+            <p>&copy; 2025 Shader Minecraft. All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('navLinks').classList.toggle('show');
-        });
-
         // Image switching functionality
         document.addEventListener('DOMContentLoaded', function() {
             const previewImages = document.querySelectorAll('.preview-image');
@@ -866,4 +781,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
