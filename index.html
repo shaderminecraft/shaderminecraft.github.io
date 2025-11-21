@@ -7,80 +7,125 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-primary: #f8f4e9; /* Whitened gold background */
-            --card-bg: #ffffff;
-            --text-dark: #333333;
-            --text-medium: #555555;
-            --accent-primary: #c9a96e; /* Rich gold */
-            --accent-secondary: #d4b885; /* Lighter gold */
-            --border-color: #e8e0ce;
-            --shadow: 0 4px 12px rgba(201, 169, 110, 0.2);
-            --transition: all 0.3s ease;
+            --color-bg-primary: #f8f4e9;
+            --color-bg-secondary: #ffffff;
+            --color-bg-footer: #f0e9d9;
+            --color-text-primary: #333333;
+            --color-text-secondary: #555555;
+            --color-text-light: #777777;
+            --color-accent-primary: #c9a96e;
+            --color-accent-secondary: #d4b885;
+            --color-accent-muted: rgba(201, 169, 110, 0.1);
+            --color-border: #e8e0ce;
+            --color-border-light: rgba(232, 224, 206, 0.5);
+            --color-overlay: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            --color-shadow: rgba(201, 169, 110, 0.2);
+            --color-shadow-hover: rgba(201, 169, 110, 0.3);
+            --font-family-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 2px 8px var(--color-shadow);
+            --shadow-md: 0 4px 12px var(--color-shadow);
+            --shadow-lg: 0 8px 24px var(--color-shadow);
+            --shadow-hover: 0 8px 20px var(--color-shadow-hover);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --container-max-width: 1200px;
+            --header-height: 80px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-dark);
+            font-family: var(--font-family-primary);
+            font-size: 16px;
             line-height: 1.6;
+            color: var(--color-text-primary);
+            background-color: var(--color-bg-primary);
             overflow-x: hidden;
         }
 
-        /* Header Styles */
-        header {
-            background-color: var(--bg-primary);
-            padding: 1.2rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid var(--border-color);
+        button:focus-visible, a:focus-visible {
+            outline: 2px solid var(--color-accent-primary);
+            outline-offset: 2px;
         }
 
-        .header-container {
-            max-width: 1200px;
+        .container {
+            max-width: var(--container-max-width);
             margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: var(--header-height);
+            background-color: var(--color-bg-primary);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .header__container {
+            height: 100%;
             display: flex;
-            justify-content: center; /* Center the logo */
+            justify-content: center;
             align-items: center;
-            position: relative; /* For mobile menu positioning */
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-primary);
-            text-decoration: none;
             display: flex;
             align-items: center;
+            text-decoration: none;
+            color: var(--color-accent-primary);
+            font-size: 1.8rem;
+            font-weight: var(--font-weight-bold);
             letter-spacing: -0.5px;
+            transition: var(--transition-normal);
         }
 
-        .logo i {
-            margin-right: 10px;
+        .logo:hover {
+            color: var(--color-accent-secondary);
+            transform: scale(1.05);
+        }
+
+        .logo__icon {
+            margin-right: var(--space-sm);
             font-size: 1.6rem;
         }
 
-        /* Shader Cards Section */
-        .shader-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
+        .main {
+            min-height: calc(100vh - var(--header-height));
+            padding: var(--space-2xl) 0;
         }
 
         .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             text-align: center;
+            color: var(--color-accent-primary);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-2xl);
             position: relative;
-            font-weight: 700;
-            color: var(--accent-primary);
         }
 
         .section-title::after {
@@ -91,193 +136,214 @@
             transform: translateX(-50%);
             width: 100px;
             height: 3px;
-            background-color: var(--accent-primary);
+            background-color: var(--color-accent-primary);
         }
 
-        .shader-grid {
+        .shaders-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: 1fr;
+            gap: var(--space-2xl);
+            width: 100%;
         }
 
         .shader-card {
-            background-color: var(--card-bg);
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-border);
+            transition: var(--transition-normal);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
         }
 
         .shader-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.3);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
         }
 
-        .card-header {
+        .shader-card__header {
             position: relative;
             overflow: hidden;
-        }
-
-        .main-thumbnail {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: var(--transition);
-            cursor: pointer;
             aspect-ratio: 16 / 9;
         }
 
-        .shader-card:hover .main-thumbnail {
-            transform: scale(1.03);
+        .shader-card__thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-normal);
+            cursor: pointer;
         }
 
-        .shader-name-container {
+        .shader-card:hover .shader-card__thumbnail {
+            transform: scale(1.05);
+        }
+
+        .shader-card__overlay {
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            right: 0;
+            padding: var(--space-lg);
+            background: var(--color-overlay);
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
         }
 
-        .shader-name {
+        .shader-card__name {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: var(--font-weight-bold);
             color: white;
+            line-height: 1.2;
         }
 
-        .version-badge {
+        .shader-card__version {
             background: rgba(0, 0, 0, 0.7);
-            color: var(--accent-primary);
-            padding: 0.3rem 0.8rem;
+            color: var(--color-accent-primary);
+            padding: var(--space-xs) var(--space-sm);
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: var(--font-weight-semibold);
             border: 1px solid rgba(201, 169, 110, 0.5);
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
         }
 
-        .creator-info {
+        .shader-card__creator {
             display: flex;
             align-items: center;
-            padding: 1rem 1.2rem 0.5rem;
+            padding: var(--space-md) var(--space-lg) 0;
             cursor: pointer;
-            outline: none; /* Remove outline */
+            transition: var(--transition-normal);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
         }
 
-        .creator-pfp {
+        .shader-card__creator:hover {
+            opacity: 0.8;
+        }
+
+        .creator__avatar {
             width: 36px;
             height: 36px;
+            border-radius: 50%;
             object-fit: cover;
-            margin-right: 10px;
-            border: 2px solid var(--accent-primary);
-            aspect-ratio: 1 / 1;
+            margin-right: var(--space-sm);
+            border: 2px solid var(--color-accent-primary);
+            flex-shrink: 0;
         }
 
-        .creator-details {
+        .creator__info {
             display: flex;
             flex-direction: column;
+            flex: 1;
         }
 
-        .creator-name {
-            font-weight: 600;
+        .creator__name {
+            font-weight: var(--font-weight-semibold);
             font-size: 0.95rem;
-            color: var(--accent-primary);
-            transition: var(--transition);
-            text-decoration: underline; /* Add underline */
-            text-decoration-color: transparent; /* Make underline transparent by default */
-            text-underline-offset: 2px; /* Position the underline */
+            color: var(--color-accent-primary);
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 2px;
+            transition: var(--transition-normal);
         }
 
-        .creator-info:hover .creator-name {
-            color: var(--accent-secondary);
-            text-decoration-color: var(--accent-secondary); /* Show underline on hover */
+        .shader-card__creator:hover .creator__name {
+            text-decoration-color: var(--color-accent-secondary);
         }
 
-        .upload-date {
+        .creator__update {
             font-size: 0.75rem;
-            opacity: 0.7;
-            color: var(--text-medium);
+            color: var(--color-text-light);
+            margin-top: 2px;
         }
 
-        .preview-carousel {
-            padding: 0.5rem 1.2rem 1rem;
+        .shader-card__carousel {
+            padding: var(--space-sm) var(--space-lg) var(--space-md);
+        }
+
+        .carousel {
             position: relative;
             overflow: hidden;
+            border-radius: var(--radius-md);
         }
 
-        .carousel-container {
-            display: flex;
+        .carousel__track-container {
             overflow: hidden;
-            gap: 0.5rem;
-            padding-bottom: 0.5rem;
-            width: 100%;
-            cursor: grab;
+            border-radius: var(--radius-md);
         }
 
-        .carousel-container:active {
-            cursor: grabbing;
-        }
-
-        .carousel-track {
+        .carousel__track {
             display: flex;
-            gap: 0.5rem;
-            transition: transform 0.5s ease;
-            user-select: none;
+            gap: var(--space-sm);
+            transition: transform 0.3s ease;
+            padding-bottom: var(--space-sm);
         }
 
-        .preview-image {
+        .carousel__image {
             width: 90px;
             height: 70px;
             object-fit: cover;
-            flex-shrink: 0;
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
             cursor: pointer;
+            transition: var(--transition-normal);
+            flex-shrink: 0;
             aspect-ratio: 16 / 9;
         }
 
-        .preview-image:hover {
-            border-color: var(--accent-primary);
+        .carousel__image:hover {
+            border-color: var(--color-accent-primary);
             transform: scale(1.05);
         }
 
-        .preview-image.active {
-            border-color: var(--accent-primary);
+        .carousel__image.active {
+            border-color: var(--color-accent-primary);
             transform: scale(1.05);
             box-shadow: 0 0 8px rgba(201, 169, 110, 0.5);
         }
 
-        .carousel-nav {
+        .carousel__nav {
             display: flex;
             justify-content: center;
-            margin-top: 10px;
-            gap: 8px;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
         }
 
-        .carousel-dot {
+        .carousel__dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: var(--border-color);
+            border: none;
+            background-color: var(--color-border);
             cursor: pointer;
-            transition: var(--transition);
+            transition: var(--transition-normal);
+            padding: 0;
         }
 
-        .carousel-dot.active {
-            background-color: var(--accent-primary);
+        .carousel__dot.active {
+            background-color: var(--color-accent-primary);
             transform: scale(1.2);
         }
 
-        .card-content {
-            padding: 0 1.2rem 1.2rem;
+        .carousel__dot:hover {
+            background-color: var(--color-accent-secondary);
         }
 
-        .shader-description {
-            color: var(--text-medium);
-            margin-bottom: 1.2rem;
+        .shader-card__content {
+            padding: 0 var(--space-lg) var(--space-lg);
+            flex: 1;
+        }
+
+        .shader-card__description {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-lg);
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -286,510 +352,674 @@
             font-size: 0.95rem;
         }
 
-        .shader-tags {
+        .shader-card__tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.6rem;
+            gap: var(--space-sm);
         }
 
-        .shader-tag {
-            background-color: rgba(201, 169, 110, 0.1);
-            color: var(--accent-primary);
-            padding: 0.4rem 0.9rem;
+        .tag {
+            background-color: var(--color-accent-muted);
+            color: var(--color-accent-primary);
+            padding: var(--space-xs) var(--space-sm);
             font-size: 0.8rem;
             border: 1px solid rgba(201, 169, 110, 0.3);
-            font-weight: 500;
+            border-radius: var(--radius-sm);
+            font-weight: var(--font-weight-medium);
+            white-space: nowrap;
         }
 
-        .card-footer {
+        .shader-card__footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 1.2rem;
-            border-top: 1px solid var(--border-color);
+            padding: var(--space-md) var(--space-lg);
+            border-top: 1px solid var(--color-border-light);
             background: rgba(248, 244, 233, 0.5);
+            margin-top: auto;
         }
 
-        .download-info {
+        .shader-card__stats {
             display: flex;
             align-items: center;
-            color: var(--text-medium);
+            color: var(--color-text-secondary);
             font-size: 0.85rem;
         }
 
-        .download-info i {
+        .stats__icon {
             margin-right: 6px;
-            color: var(--accent-primary);
+            color: var(--color-accent-primary);
         }
 
-        .view-details {
-            color: var(--accent-primary);
+        .shader-card__link {
+            color: var(--color-accent-primary);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: var(--font-weight-semibold);
             font-size: 0.85rem;
-            transition: var(--transition);
+            transition: var(--transition-normal);
             display: flex;
             align-items: center;
         }
 
-        .view-details i {
+        .shader-card__link:hover {
+            color: var(--color-accent-secondary);
+        }
+
+        .link__icon {
             margin-left: 5px;
-            transition: var(--transition);
+            transition: var(--transition-normal);
             font-size: 0.8rem;
         }
 
-        .view-details:hover {
-            color: var(--accent-secondary);
-        }
-
-        .view-details:hover i {
+        .shader-card__link:hover .link__icon {
             transform: translateX(3px);
         }
 
-        /* Footer */
-        footer {
-            background-color: #f0e9d9;
-            padding: 3rem 2rem 1.5rem;
-            margin-top: 2rem;
-            border-top: 1px solid var(--border-color);
+        .footer {
+            background-color: var(--color-bg-footer);
+            padding: var(--space-2xl) 0 var(--space-lg);
+            margin-top: var(--space-2xl);
+            border-top: 1px solid var(--color-border);
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        .footer__content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2.5rem;
+            gap: var(--space-2xl);
+            margin-bottom: var(--space-2xl);
         }
 
-        .footer-column h3 {
-            color: var(--accent-primary);
-            margin-bottom: 1.5rem;
+        .footer__title {
+            color: var(--color-accent-primary);
+            margin-bottom: var(--space-lg);
             font-size: 1.3rem;
+            font-weight: var(--font-weight-semibold);
         }
 
-        .footer-links {
+        .footer__description {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--space-lg);
+        }
+
+        .footer__links {
             list-style: none;
         }
 
-        .footer-links li {
-            margin-bottom: 0.9rem;
+        .footer__links li {
+            margin-bottom: var(--space-sm);
         }
 
-        .footer-links a {
-            color: var(--text-medium);
+        .footer__link {
+            color: var(--color-text-secondary);
             text-decoration: none;
-            transition: var(--transition);
+            transition: var(--transition-normal);
+            display: inline-block;
         }
 
-        .footer-links a:hover {
-            color: var(--accent-primary);
+        .footer__link:hover {
+            color: var(--color-accent-primary);
             padding-left: 8px;
         }
 
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: var(--space-md);
         }
 
-        .social-links a {
+        .social-link {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 40px;
             height: 40px;
-            background-color: rgba(201, 169, 110, 0.1);
-            color: var(--accent-primary);
-            transition: var(--transition);
+            background-color: var(--color-accent-muted);
+            color: var(--color-accent-primary);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-normal);
         }
 
-        .social-links a:hover {
-            background-color: var(--accent-primary);
+        .social-link:hover {
+            background-color: var(--color-accent-primary);
             color: white;
             transform: translateY(-3px);
         }
 
-        .copyright {
+        .footer__copyright {
             text-align: center;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-medium);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-border-light);
+            color: var(--color-text-secondary);
             font-size: 0.9rem;
         }
 
-        /* Remove blue outline on click for all elements */
-        *:focus {
-            outline: none;
+        @media (min-width: 769px) {
+            .shaders-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-xl);
+            }
+            
+            .shader-card {
+                max-width: 100%;
+            }
+            
+            .carousel__image {
+                width: 80px;
+                height: 60px;
+            }
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                align-items: center;
+        @media (min-width: 1024px) {
+            .shaders-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--space-lg);
             }
-
-            .shader-grid {
-                grid-template-columns: 1fr;
+            
+            .shader-card {
+                max-width: 100%;
             }
-
+            
+            .carousel__image {
+                width: 70px;
+                height: 52px;
+            }
+            
             .section-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                margin-bottom: var(--space-2xl);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--space-md);
+            }
+
+            .main {
+                padding: var(--space-xl) 0;
+            }
+
+            .shaders-grid {
+                gap: var(--space-xl);
+            }
+
+            .footer__content {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+
+            .carousel__image {
+                width: 80px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                height: 70px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .logo__icon {
+                font-size: 1.3rem;
+            }
+
+            .shader-card__overlay {
+                padding: var(--space-md);
+            }
+
+            .shader-card__name {
+                font-size: 1.3rem;
+            }
+
+            .carousel__image {
+                width: 70px;
+                height: 52px;
+            }
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .shader-card__thumbnail, .carousel__image {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .shader-card:hover {
+                transform: none;
+            }
+
+            .carousel__track {
+                transition: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
+    <header class="header">
+        <div class="header__container">
             <a href="#" class="logo">
-                <i class="fas fa-gem"></i>
-                Shader Minecraft
+                <i class="fas fa-gem logo__icon"></i>
+                <span class="logo__text">Shader Minecraft</span>
             </a>
         </div>
     </header>
-
-    <!-- Shader Cards Section -->
-    <section class="shader-section">
-        <h2 class="section-title">Featured Shader Packs</h2>
-        <div class="shader-grid">
-            <!-- G-Lime Shader Card -->
-            <div class="shader-card" id="g-lime-shader">
-                <div class="card-header">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" alt="G-Lime Shader Preview" class="main-thumbnail">
-                    <div class="shader-name-container">
-                        <div class="shader-name">G-Lime Shader</div>
-                        <div class="version-badge">v2.0.0</div>
-                    </div>
-                </div>
-                
-                <div class="creator-info" onclick="window.open('https://Instagram.com/dirgaas._', '_blank')">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-dirgaas.webp" alt="Creator" class="creator-pfp">
-                    <div class="creator-details">
-                        <div class="creator-name">DirgaAS</div>
-                        <div class="upload-date" id="g-lime-date">Updated: <span class="date-text">Loading...</span></div>
-                    </div>
-                </div>
-                
-                <div class="preview-carousel">
-                    <div class="carousel-container" id="carousel1">
-                        <div class="carousel-track">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-1.jpg" alt="Preview 1" class="preview-image active">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-2.jpg" alt="Preview 2" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-3.jpg" alt="Preview 3" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-4.jpg" alt="Preview 4" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-5.jpg" alt="Preview 5" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-6.jpg" alt="Preview 6" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-7.jpg" alt="Preview 7" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-8.jpg" alt="Preview 8" class="preview-image">
+    
+    <main class="main">
+        <section class="shaders-section">
+            <div class="container">
+                <h2 class="section-title">Featured Shader Packs</h2>
+                <div class="shaders-grid">
+                    <article class="shader-card" data-shader="g-lime">
+                        <div class="shader-card__header">
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-thumbnail.jpg" alt="G-Lime Shader showcasing vibrant green-lime glow effects" class="shader-card__thumbnail">
+                            <div class="shader-card__overlay">
+                                <h3 class="shader-card__name">G-Lime Shader</h3>
+                                <span class="shader-card__version">v2.0.0</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="carousel-nav" id="nav1">
-                        <div class="carousel-dot active" data-index="0"></div>
-                        <div class="carousel-dot" data-index="1"></div>
-                        <div class="carousel-dot" data-index="2"></div>
-                        <div class="carousel-dot" data-index="3"></div>
-                        <div class="carousel-dot" data-index="4"></div>
-                        <div class="carousel-dot" data-index="5"></div>
-                        <div class="carousel-dot" data-index="6"></div>
-                        <div class="carousel-dot" data-index="7"></div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="shader-description">The definitive, clean version of the G-Lime shader. It gives your world that perfect green-lime glow, making everything feel more vibrant and peaceful all while keeping the simple charm of vanilla Minecraft.</p>
-                    <div class="shader-tags">
-                        <span class="shader-tag">Realistic</span>
-                        <span class="shader-tag">Performance</span>
-                        <span class="shader-tag">Optimized</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="download-info">
-                        <i class="fas fa-download"></i> 12.7K Downloads
-                    </div>
-                    <a href="https://shaderminecraft.github.io/glimeshader" class="view-details">
-                        See More <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- LBT Shader Card -->
-            <div class="shader-card" id="lbt-shader">
-                <div class="card-header">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" alt="LBT Shader Preview" class="main-thumbnail">
-                    <div class="shader-name-container">
-                        <div class="shader-name">LBT Shader</div>
-                        <div class="version-badge">v1.0.8</div>
-                    </div>
-                </div>
-                
-                <div class="creator-info" onclick="window.open('https://Instagram.com/anugrahbodi123', '_blank')">
-                    <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-anugrahbodi123.webp" alt="Creator" class="creator-pfp">
-                    <div class="creator-details">
-                        <div class="creator-name">anuGrahbodi123</div>
-                        <div class="upload-date" id="lbt-date">Updated: <span class="date-text">Loading...</span></div>
-                    </div>
-                </div>
-                
-                <div class="preview-carousel">
-                    <div class="carousel-container" id="carousel2">
-                        <div class="carousel-track">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-day-1.jpg" alt="Preview 1" class="preview-image active">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-sunset-1.jpg" alt="Preview 2" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-1.jpg" alt="Preview 3" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-rain-1.jpg" alt="Preview 4" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-2.jpg" alt="Preview 5" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-nether-1.jpg" alt="Preview 6" class="preview-image">
-                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-end-1.jpg" alt="Preview 7" class="preview-image">
+                          
+                        <button class="shader-card__creator">
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-dirgaas.webp" alt="Profile picture of creator DirgaAS" class="creator__avatar">
+                            <div class="creator__info">
+                                <span class="creator__name">DirgaAS</span>
+                                <time class="creator__update" datetime="2025-01-01">Updated: <span class="date-text">Loading...</span></time>
+                            </div>
+                        </button>
+                          
+                        <div class="shader-card__carousel">
+                            <div class="carousel" data-carousel="g-lime">
+                                <div class="carousel__track-container">
+                                    <div class="carousel__track">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-1.jpg" alt="G-Lime Shader daytime scene 1" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-2.jpg" alt="G-Lime Shader daytime scene 2" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-3.jpg" alt="G-Lime Shader daytime scene 3" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-4.jpg" alt="G-Lime Shader daytime scene 4" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-5.jpg" alt="G-Lime Shader daytime scene 5" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-v1.0-day-6.jpg" alt="G-Lime Shader daytime scene 6" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-7.jpg" alt="G-Lime Shader daytime scene 7" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/g-lime-essence/screenshots/glime-essence-day-8.jpg" alt="G-Lime Shader daytime scene 8" class="carousel__image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel__nav" data-nav="g-lime">
+                                <button class="carousel__dot active" aria-label="Show slide 1" aria-current="true"></button>
+                                <button class="carousel__dot" aria-label="Show slide 2"></button>
+                                <button class="carousel__dot" aria-label="Show slide 3"></button>
+                                <button class="carousel__dot" aria-label="Show slide 4"></button>
+                                <button class="carousel__dot" aria-label="Show slide 5"></button>
+                                <button class="carousel__dot" aria-label="Show slide 6"></button>
+                                <button class="carousel__dot" aria-label="Show slide 7"></button>
+                                <button class="carousel__dot" aria-label="Show slide 8"></button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="carousel-nav" id="nav2">
-                        <div class="carousel-dot active" data-index="0"></div>
-                        <div class="carousel-dot" data-index="1"></div>
-                        <div class="carousel-dot" data-index="2"></div>
-                        <div class="carousel-dot" data-index="3"></div>
-                        <div class="carousel-dot" data-index="4"></div>
-                        <div class="carousel-dot" data-index="5"></div>
-                        <div class="carousel-dot" data-index="6"></div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="shader-description">LBT Shader. This shader will make your world more beautiful by changing the colors of day, night, rain, torch, and more. This shader will also make fog in your world more beautiful.</p>
-                    <div class="shader-tags">
-                        <span class="shader-tag">Water Effects</span>
-                        <span class="shader-tag">Performance</span>
-                        <span class="shader-tag">Low-End</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="download-info">
-                        <i class="fas fa-download"></i> 140K+ Downloads
-                    </div>
-                    <a href="https://shaderminecraft.github.io/lbtshader" class="view-details">
-                        See More <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+                          
+                        <div class="shader-card__content">
+                            <p class="shader-card__description">The definitive, clean version of the G-Lime shader. It gives your world that perfect green-lime glow, making everything feel more vibrant and peaceful all while keeping the simple charm of vanilla Minecraft.</p>
+                            <div class="shader-card__tags">
+                                <span class="tag">Realistic</span>
+                                <span class="tag">Performance</span>
+                                <span class="tag">Optimized</span>
+                            </div>
+                        </div>
+                          
+                        <div class="shader-card__footer">
+                            <div class="shader-card__stats">
+                                <i class="fas fa-download stats__icon"></i>
+                                <span class="stats__count">12.7K Downloads</span>
+                            </div>
+                            <a href="https://shaderminecraft.github.io/glimeshader" class="shader-card__link">
+                                See More <i class="fas fa-arrow-right link__icon"></i>
+                            </a>
+                        </div>
+                    </article>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>Shader Minecraft</h3>
-                <p>Your ultimate destination for the best Minecraft Pocket Edition shaders. Transform your gameplay with stunning visual enhancements.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-discord"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-reddit"></i></a>
+                    <article class="shader-card" data-shader="lbt">
+                        <div class="shader-card__header">
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-thumbnail.jpg" alt="LBT Shader showcasing beautiful color enhancements" class="shader-card__thumbnail">
+                            <div class="shader-card__overlay">
+                                <h3 class="shader-card__name">LBT Shader</h3>
+                                <span class="shader-card__version">v1.0.8</span>
+                            </div>
+                        </div>
+                          
+                        <button class="shader-card__creator">
+                            <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/creator's%20profile/creator-anugrahbodi123.webp" alt="Profile picture of creator anuGrahbodi123" class="creator__avatar">
+                            <div class="creator__info">
+                                <span class="creator__name">anuGrahbodi123</span>
+                                <time class="creator__update" datetime="2025-01-01">Updated: <span class="date-text">Loading...</span></time>
+                            </div>
+                        </button>
+                          
+                        <div class="shader-card__carousel">
+                            <div class="carousel" data-carousel="lbt">
+                                <div class="carousel__track-container">
+                                    <div class="carousel__track">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-day-1.jpg" alt="LBT Shader daytime scene 1" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-sunset-1.jpg" alt="LBT Shader sunset scene" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-1.jpg" alt="LBT Shader nighttime scene 1" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-rain-1.jpg" alt="LBT Shader rainy scene" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-night-2.jpg" alt="LBT Shader nighttime scene 2" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-nether-1.jpg" alt="LBT Shader nether scene" class="carousel__image">
+                                        <img src="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/refs/heads/main/projects/lbt-shader/screenshots/lbt-shader-end-1.jpg" alt="LBT Shader end dimension scene" class="carousel__image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel__nav" data-nav="lbt">
+                                <button class="carousel__dot active" aria-label="Show slide 1" aria-current="true"></button>
+                                <button class="carousel__dot" aria-label="Show slide 2"></button>
+                                <button class="carousel__dot" aria-label="Show slide 3"></button>
+                                <button class="carousel__dot" aria-label="Show slide 4"></button>
+                                <button class="carousel__dot" aria-label="Show slide 5"></button>
+                                <button class="carousel__dot" aria-label="Show slide 6"></button>
+                                <button class="carousel__dot" aria-label="Show slide 7"></button>
+                            </div>
+                        </div>
+                          
+                        <div class="shader-card__content">
+                            <p class="shader-card__description">LBT Shader. This shader will make your world more beautiful by changing the colors of day, night, rain, torch, and more. This shader will also make fog in your world more beautiful.</p>
+                            <div class="shader-card__tags">
+                                <span class="tag">Water Effects</span>
+                                <span class="tag">Performance</span>
+                                <span class="tag">Low-End</span>
+                            </div>
+                        </div>
+                          
+                        <div class="shader-card__footer">
+                            <div class="shader-card__stats">
+                                <i class="fas fa-download stats__icon"></i>
+                                <span class="stats__count">140K+ Downloads</span>
+                            </div>
+                            <a href="https://shaderminecraft.github.io/lbtshader" class="shader-card__link">
+                                See More <i class="fas fa-arrow-right link__icon"></i>
+                            </a>
+                        </div>
+                    </article>
                 </div>
             </div>
-            <div class="footer-column">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">All Shaders</a></li>
-                    <li><a href="#">Categories</a></li>
-                    <li><a href="#">Top Downloads</a></li>
-                    <li><a href="#">Latest Updates</a></li>
-                </ul>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__column">
+                    <h3 class="footer__title">Shader Minecraft</h3>
+                    <p class="footer__description">Your ultimate destination for the best Minecraft Pocket Edition shaders. Transform your gameplay with stunning visual enhancements.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Join our Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Subscribe on YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Follow on Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Join Reddit community">
+                            <i class="fab fa-reddit"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer__column">
+                    <h3 class="footer__title">Quick Links</h3>
+                    <ul class="footer__links">
+                        <li><a href="#" class="footer__link">Home</a></li>
+                        <li><a href="#" class="footer__link">All Shaders</a></li>
+                        <li><a href="#" class="footer__link">Categories</a></li>
+                        <li><a href="#" class="footer__link">Top Downloads</a></li>
+                        <li><a href="#" class="footer__link">Latest Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer__column">
+                    <h3 class="footer__title">Support</h3>
+                    <ul class="footer__links">
+                        <li><a href="#" class="footer__link">Installation Guide</a></li>
+                        <li><a href="#" class="footer__link">FAQ</a></li>
+                        <li><a href="#" class="footer__link">Troubleshooting</a></li>
+                        <li><a href="#" class="footer__link">Contact Us</a></li>
+                        <li><a href="#" class="footer__link">Submit a Shader</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-column">
-                <h3>Support</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Installation Guide</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Troubleshooting</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Submit a Shader</a></li>
-                </ul>
+            <div class="footer__copyright">
+                <p>&copy; 2025 Shader Minecraft. All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>
             </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2025 Shader Minecraft. All rights reserved. Minecraft is a trademark of Mojang AB. This site is not affiliated with Mojang.</p>
         </div>
     </footer>
 
     <script>
-        // Date calculation function - now showing "X days ago" format
-        function getDaysAgo(days) {
-            if (days === 0) return "Today";
-            if (days === 1) return "1 day ago";
-            return `${days} days ago`;
+        class ShaderApp {
+            constructor() {
+                this.carousels = new Map();
+                this.shaderUrls = {
+                    'g-lime': 'https://shaderminecraft.github.io/glimeshader',
+                    'lbt': 'https://shaderminecraft.github.io/lbtshader'
+                };
+                this.creatorProfiles = {
+                    'g-lime': 'https://Instagram.com/dirgaas._',
+                    'lbt': 'https://Instagram.com/anugrahbodi123'
+                };
+                this.init();
+            }
+
+            init() {
+                this.updateDates();
+                this.initCarousels();
+                this.bindEvents();
+                this.setupImageErrorHandling();
+            }
+
+            getDaysAgo(days) {
+                if (days === 0) return "Today";
+                if (days === 1) return "1 day ago";
+                return `${days} days ago`;
+            }
+
+            updateDates() {
+                const dateElements = document.querySelectorAll('.date-text');
+                dateElements.forEach((element, index) => {
+                    const daysAgo = index === 0 ? 2 : 7;
+                    element.textContent = this.getDaysAgo(daysAgo);
+                });
+            }
+
+            initCarousels() {
+                const carouselElements = document.querySelectorAll('[data-carousel]');
+                carouselElements.forEach((carouselElement) => {
+                    const carouselId = carouselElement.dataset.carousel;
+                    const carousel = new Carousel(carouselElement, carouselId);
+                    this.carousels.set(carouselId, carousel);
+                });
+            }
+
+            bindEvents() {
+                document.querySelectorAll('.shader-card__thumbnail').forEach(thumbnail => {
+                    thumbnail.addEventListener('click', (e) => {
+                        const card = e.target.closest('.shader-card');
+                        const shaderType = card.dataset.shader;
+                        this.navigateToShader(shaderType);
+                    });
+                });
+
+                document.querySelectorAll('.shader-card__creator').forEach(creator => {
+                    creator.addEventListener('click', (e) => {
+                        const card = e.target.closest('.shader-card');
+                        const shaderType = card.dataset.shader;
+                        this.openCreatorProfile(shaderType);
+                    });
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeModals();
+                    }
+                });
+            }
+
+            navigateToShader(shaderType) {
+                if (this.shaderUrls[shaderType]) {
+                    window.open(this.shaderUrls[shaderType], '_blank');
+                }
+            }
+
+            openCreatorProfile(shaderType) {
+                if (this.creatorProfiles[shaderType]) {
+                    window.open(this.creatorProfiles[shaderType], '_blank');
+                }
+            }
+
+            closeModals() {
+            }
+
+            setupImageErrorHandling() {
+                document.addEventListener('error', (e) => {
+                    if (e.target.tagName === 'IMG') {
+                        e.target.style.opacity = '0.5';
+                    }
+                }, true);
+            }
         }
 
-        // Update date elements
-        function updateDates() {
-            // G-Lime Shader (2 days ago)
-            document.querySelector('#g-lime-date .date-text').textContent = getDaysAgo(2);
-            
-            // LBT Shader (7 days ago)
-            document.querySelector('#lbt-date .date-text').textContent = getDaysAgo(7);
+        class Carousel {
+            constructor(container, id) {
+                this.container = container;
+                this.id = id;
+                this.track = container.querySelector('.carousel__track');
+                this.images = Array.from(this.track.querySelectorAll('.carousel__image'));
+                this.nav = document.querySelector(`[data-nav="${id}"]`);
+                this.dots = Array.from(this.nav.querySelectorAll('.carousel__dot'));
+                
+                this.currentIndex = 0;
+                this.slideWidth = 0;
+                this.gap = 8;
+                this.autoAdvanceInterval = null;
+                this.isPaused = false;
+                
+                this.init();
+            }
+
+            init() {
+                this.calculateSlideWidth();
+                this.setupEventListeners();
+                this.startAutoAdvance();
+                this.updateCarousel();
+                
+                window.addEventListener('resize', () => {
+                    this.calculateSlideWidth();
+                    this.updateCarousel();
+                });
+            }
+
+            calculateSlideWidth() {
+                if (this.images.length > 0) {
+                    const firstImage = this.images[0];
+                    const rect = firstImage.getBoundingClientRect();
+                    this.slideWidth = rect.width + this.gap;
+                }
+            }
+
+            setupEventListeners() {
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        this.goToSlide(index);
+                        this.resetAutoAdvance();
+                    });
+                });
+
+                this.images.forEach((image, index) => {
+                    image.addEventListener('click', () => {
+                        const card = this.container.closest('.shader-card');
+                        const shaderType = card.dataset.shader;
+                        
+                        const shaderApp = new ShaderApp();
+                        shaderApp.navigateToShader(shaderType);
+                    });
+                });
+
+                this.container.addEventListener('mouseenter', () => {
+                    this.pauseAutoAdvance();
+                });
+
+                this.container.addEventListener('mouseleave', () => {
+                    if (!this.isPaused) {
+                        this.resumeAutoAdvance();
+                    }
+                });
+            }
+
+            goToSlide(index) {
+                this.currentIndex = index;
+                this.updateCarousel();
+            }
+
+            nextSlide() {
+                this.currentIndex = (this.currentIndex + 1) % this.images.length;
+                this.updateCarousel();
+            }
+
+            updateCarousel() {
+                const translateX = -this.currentIndex * this.slideWidth;
+                this.track.style.transform = `translateX(${translateX}px)`;
+                
+                this.images.forEach((img, index) => {
+                    img.classList.toggle('active', index === this.currentIndex);
+                });
+                
+                this.dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === this.currentIndex);
+                    dot.setAttribute('aria-current', index === this.currentIndex ? 'true' : 'false');
+                });
+            }
+
+            startAutoAdvance() {
+                this.autoAdvanceInterval = setInterval(() => {
+                    this.nextSlide();
+                }, 2300);
+            }
+
+            pauseAutoAdvance() {
+                if (this.autoAdvanceInterval) {
+                    clearInterval(this.autoAdvanceInterval);
+                    this.autoAdvanceInterval = null;
+                }
+            }
+
+            resumeAutoAdvance() {
+                if (!this.autoAdvanceInterval) {
+                    this.startAutoAdvance();
+                }
+            }
+
+            resetAutoAdvance() {
+                this.pauseAutoAdvance();
+                this.resumeAutoAdvance();
+            }
+
+            destroy() {
+                this.pauseAutoAdvance();
+            }
         }
 
-        // Initialize carousels with improved functionality
-        function initCarousel(carouselId, navId, shaderLink) {
-            const carousel = document.getElementById(carouselId);
-            const track = carousel.querySelector('.carousel-track');
-            const images = track.querySelectorAll('.preview-image');
-            const nav = document.getElementById(navId);
-            const dots = nav.querySelectorAll('.carousel-dot');
-            const containerWidth = carousel.offsetWidth;
-            const imageWidth = 90; // width of each preview image
-            const gap = 8; // gap between images
-            const visibleCount = Math.floor(containerWidth / (imageWidth + gap));
-            
-            let currentIndex = 0;
-            let isDragging = false;
-            let startPos = 0;
-            let currentTranslate = 0;
-            let prevTranslate = 0;
-            let animationID;
-            
-            // Function to update carousel position
-            function updateCarousel() {
-                const translateX = -currentIndex * (imageWidth + gap);
-                track.style.transform = `translateX(${translateX}px)`;
-                
-                // Update active states
-                images.forEach((img, index) => {
-                    img.classList.toggle('active', index === currentIndex);
-                });
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
-            }
-            
-            // Click on dots to navigate
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentIndex = index;
-                    updateCarousel();
-                });
-            });
-            
-            // Click on images to navigate or open link
-            images.forEach((img, index) => {
-                img.addEventListener('click', (e) => {
-                    // Only navigate if not dragging
-                    if (!isDragging) {
-                        currentIndex = index;
-                        updateCarousel();
-                    }
-                });
-            });
-            
-            // Auto-advance carousel
-            setInterval(() => {
-                if (!isDragging) {
-                    currentIndex = (currentIndex + 1) % images.length;
-                    updateCarousel();
-                }
-            }, 2000);
-            
-            // Drag functionality for carousel
-            function startDrag(e) {
-                isDragging = true;
-                startPos = getPositionX(e);
-                track.style.cursor = 'grabbing';
-                track.style.userSelect = 'none';
-                
-                // Cancel animation frame if any
-                cancelAnimationFrame(animationID);
-            }
-            
-            function drag(e) {
-                if (isDragging) {
-                    const currentPosition = getPositionX(e);
-                    currentTranslate = prevTranslate + currentPosition - startPos;
-                }
-            }
-            
-            function endDrag() {
-                isDragging = false;
-                track.style.cursor = 'grab';
-                
-                const movedBy = currentTranslate - prevTranslate;
-                
-                // If moved enough to change slide
-                if (movedBy < -50 && currentIndex < images.length - 1) {
-                    currentIndex += 1;
-                }
-                
-                if (movedBy > 50 && currentIndex > 0) {
-                    currentIndex -= 1;
-                }
-                
-                updateCarousel();
-                prevTranslate = -currentIndex * (imageWidth + gap);
-            }
-            
-            function getPositionX(e) {
-                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            }
-            
-            // Mouse events
-            carousel.addEventListener('mousedown', startDrag);
-            carousel.addEventListener('mousemove', drag);
-            carousel.addEventListener('mouseup', endDrag);
-            carousel.addEventListener('mouseleave', endDrag);
-            
-            // Touch events
-            carousel.addEventListener('touchstart', startDrag);
-            carousel.addEventListener('touchmove', drag);
-            carousel.addEventListener('touchend', endDrag);
-            
-            // Initialize
-            updateCarousel();
-        }
-        
-        // Initialize both carousels
-        document.addEventListener('DOMContentLoaded', function() {
-            // Update dates
-            updateDates();
-            
-            // G-Lime Shader
-            initCarousel('carousel1', 'nav1', 'https://shaderminecraft.github.io/glimeshader');
-            
-            // LBT Shader
-            initCarousel('carousel2', 'nav2', 'https://shaderminecraft.github.io/lbtshader');
-            
-            // Add click events to main thumbnails and preview images
-            const gLimeCard = document.getElementById('g-lime-shader');
-            const lbtCard = document.getElementById('lbt-shader');
-            
-            // G-Lime Shader click events
-            gLimeCard.querySelector('.main-thumbnail').addEventListener('click', function() {
-                window.location.href = 'https://shaderminecraft.github.io/glimeshader';
-            });
-            
-            gLimeCard.querySelectorAll('.preview-image').forEach(img => {
-                img.addEventListener('click', function(e) {
-                    if (!e.target.closest('.carousel-container').isDragging) {
-                        window.location.href = 'https://shaderminecraft.github.io/glimeshader';
-                    }
-                });
-            });
-            
-            // LBT Shader click events
-            lbtCard.querySelector('.main-thumbnail').addEventListener('click', function() {
-                window.location.href = 'https://shaderminecraft.github.io/lbtshader';
-            });
-            
-            lbtCard.querySelectorAll('.preview-image').forEach(img => {
-                img.addEventListener('click', function(e) {
-                    if (!e.target.closest('.carousel-container').isDragging) {
-                        window.location.href = 'https://shaderminecraft.github.io/lbtshader';
-                    }
-                });
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            new ShaderApp();
         });
+
+        if (typeof module !== 'undefined' && module.exports) {
+            module.exports = { ShaderApp, Carousel };
+        }
     </script>
 </body>
-    </html>
+</html>
