@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shader Minecraft</title>
     <meta name="description" content="Enhance your Minecraft experience with the most realistic shaders available on Shader Minecraft!">
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/shaderminecraft/shaderminecraft/main/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -64,6 +63,7 @@
             color: var(--color-text-primary);
             background-color: var(--color-bg-primary);
             overflow-x: hidden;
+            padding-top: var(--header-height);
         }
 
         button:focus-visible, a:focus-visible {
@@ -78,14 +78,22 @@
         }
 
         .header {
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
             height: var(--header-height);
             background-color: var(--color-bg-primary);
             border-bottom: 1px solid var(--color-border);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             backdrop-filter: blur(10px);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .header.hidden {
+            transform: translateY(-100%);
         }
 
         .header__container {
@@ -814,6 +822,7 @@
                     'g-lime': 'https://Instagram.com/dirgaas._',
                     'lbt': 'https://Instagram.com/anugrahbodi123'
                 };
+                this.scrollPosition = 0;
                 this.init();
             }
 
@@ -822,6 +831,27 @@
                 this.initCarousels();
                 this.bindEvents();
                 this.setupImageErrorHandling();
+                this.setupScrollBehavior();
+            }
+
+            setupScrollBehavior() {
+                let lastScrollTop = 0;
+                const header = document.querySelector('.header');
+                const scrollThreshold = 60;
+
+                window.addEventListener('scroll', () => {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    
+                    if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                        // Scrolling down
+                        header.classList.add('hidden');
+                    } else {
+                        // Scrolling up
+                        header.classList.remove('hidden');
+                    }
+                    
+                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+                }, { passive: true });
             }
 
             getDaysAgo(days) {
